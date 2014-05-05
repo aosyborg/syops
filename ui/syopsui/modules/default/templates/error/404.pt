@@ -1,0 +1,15 @@
+<metal:main use-macro="load: ../layouts/default.pt">
+    <div metal:fill-slot="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="text-center error-box">
+                    <h1 class="font-xl"><strong>Whoops! Page <u>Not</u> Found</strong></h1>
+                    <p class="lead">
+                        The page you requested could not be found, either contact your webmaster or try again.
+                        Use your browsers <b>Back</b> button to navigate to the page you have prevously come from
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</metal:main>

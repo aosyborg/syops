@@ -1,0 +1,15 @@
+<metal:main use-macro="load: ../layouts/default.pt">
+    <metal:slot fill-slot="head">
+        <link rel="stylesheet" type="text/css" href="/public/css/login.css" />
+    </metal:slot>
+
+    <header metal:fill-slot="header">
+        <div id="logo">
+            <a href="/">SyOps</a>
+        </div>
+    </header>
+
+    <div metal:fill-slot="content" class="container">
+        Hello
+    </div>
+</metal:main>
