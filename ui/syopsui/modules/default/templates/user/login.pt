@@ -3,13 +3,31 @@
         <link rel="stylesheet" type="text/css" href="/public/css/login.css" />
     </metal:slot>
 
-    <header metal:fill-slot="header">
-        <div id="logo">
-            <a href="/">SyOps</a>
-        </div>
-    </header>
-
     <div metal:fill-slot="content" class="container">
-        Hello
+        <h1>Welcome to SyOps!</h1>
+
+        <form method="post" action="/login">
+            <div class="banner bg-danger" tal:condition="exists:error">
+                <span class="glyphicon glyphicon-remove"></span>
+                ${error}
+            </div>
+
+            <div class="form-group">
+                <label for="email-input">Email</label>
+                ${structure:form.get_element('email')}
+            </div>
+
+            <div class="form-group">
+                <label for="password-input">Password</label>
+                ${structure:form.get_element('password')}
+            </div>
+
+            <div class="form-group">
+                ${structure:form.get_element('remember')}
+                <label for="remember-input">Remember me</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg">Login</button>
+        </form>
     </div>
 </metal:main>

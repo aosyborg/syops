@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS public.apps CASCADE;
+CREATE TABLE public.apps (
+    id BIGSERIAL PRIMARY KEY,
+    team_id BIGINT NOT NULL REFERENCES public.teams (id) ON DELETE CASCADE,
+    name VARCHAR(255),
+    url VARCHAR(255),
+    insert_ts TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

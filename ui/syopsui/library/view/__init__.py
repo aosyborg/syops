@@ -8,7 +8,9 @@ class Abstract(object):
         self.init()
 
     def init(self):
-        pass
+        # TODO: Fix this
+        if not 'user' in self.session and self.request.view_name != 'login':
+            return self.redirect('/')
 
     def render(self, renderer_name, value, request=None, package=None):
         # Defaults

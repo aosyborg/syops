@@ -14,7 +14,9 @@ setup(
         'pyramid_debugtoolbar',
         'pyramid_beaker',
         'simplejson==3.1.0',
-        'waitress'
+        'waitress',
+        'psycopg2',
+        'ConfigParser'
     ],
     scripts=[],
     entry_points="""\

@@ -1,0 +1,115 @@
+body {
+    background: none repeat scroll 0 0 #F2F5F8;
+    font-family: "Open Sans",Arial,Helvetica,Sans-Serif;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.banner {
+    padding: 15px;
+    margin-bottom: 1em;
+}
+
+#wapper {
+    position: relative;
+    margin: 0 auto;
+}
+#sidebar {
+    background: none repeat scroll 0 0 #2A313A;
+    border-right: 1px solid #3C434D;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 230px;
+}
+#sidebar section {
+    margin-bottom: 35px;
+}
+#sidebar section h3 {
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-left: 23px;
+    text-shadow: 1px 1px #000000;
+    text-transform: uppercase;
+}
+#sidebar section ul {
+    list-style-type: none;
+    margin-bottom: 0;
+    margin-top: 15px;
+    padding-left: 0;
+}
+#sidebar section ul li {
+    margin: 3px 0;
+}
+#sidebar section ul li a {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #ECF6FF;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 7px 10px 9px 23px;
+    text-decoration: none;
+    transition: background 0.13s linear 0s;
+    width: 100%;
+}
+#sidebar section ul li a:hover {
+    background: none repeat scroll 0 0 #343E4E;
+}
+#sidebar section ul li a.active {
+    background: linear-gradient(#5B6479, #4C5566) repeat scroll 0 0%, none repeat scroll 0 0 #686E78;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.16) inset;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+#sidebar-user {
+    background: linear-gradient(#3D4A5D, #3F4C5C) repeat scroll 0 0%, none repeat scroll 0 0 #686E78;
+    color: #FFFFFF;
+    height: 63px;
+    margin-bottom: 20px;
+    padding: 0 20px;
+}
+#sidebar-user .name {
+    color: #F0F5FA;
+    display: block;
+    font-size: 15px;
+    padding: 10px 0;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+#content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    margin-left: 230px;
+    padding: 0;
+}
+#content .menubar {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+    height: 63px;
+}
+#content .menubar .page-title {
+    border-right: 1px solid #E6E6E6;
+    color: #7E7E7E;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 20px 30px;
+    text-transform: uppercase;
+}
+#content .menubar .pull-right {
+    margin: 20px 30px;
+}
+
+#content .content-wrapper {
+    padding: 40px;
+}
+
+#alert {
+    display: inline-block;
+    padding: 15px;
+    width: 900px;
+}

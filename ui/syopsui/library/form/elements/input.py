@@ -1,4 +1,4 @@
-from syopsui.library.form.elements.abstract import Abstract
+from syopsui.library.form.elements import Abstract
 
 class Input(Abstract):
     def __init__(self, name, type='text'):

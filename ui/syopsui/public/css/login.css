@@ -1,0 +1,13 @@
+h1 {
+    font-size: 24px;
+    text-align: center;
+}
+
+form {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.25);
+    margin: 40px auto 0;
+    max-width: 460px;
+    padding: 42px 48px;
+}
