@@ -62,11 +62,9 @@ class Team(Abstract):
             if row['app_id'] and row['app_id'] not in teams[row['team_id']]['apps']:
                 teams[row['team_id']]['apps'][row['app_id']] = row['app_name']
 
-        print teams
         return teams
 
     def save(self):
-        print self.id, self.name, self.owner_id
         db_cursor = self.data_manager.get_db_cursor()
         db_cursor.execute('''
             SELECT * FROM set_team(%(id)s::BIGINT, %(name)s::VARCHAR,

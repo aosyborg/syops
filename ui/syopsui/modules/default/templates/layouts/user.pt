@@ -24,12 +24,12 @@
                 <ul>
                     <li><a href="/teams?id=${team_id}"
                            tal:attributes="class python:'active' if sidebar_active ==
-                           'dashboard-${team_id}' else ''">Overview</a>
+                           'overview-%s' % team_id else ''">Overview</a>
                     </li>
                     <li tal:repeat="(app_id,app_name) python:team_app['apps'].items()">
                         <a href="/apps?id=${app_id}"
                            tal:attributes="class python:'active' if sidebar_active ==
-                           'apps-${app_id}' else ''">${app_name}</a>
+                           'apps-%s' % app_id else ''">${app_name}</a>
                     </li>
             </section>
 

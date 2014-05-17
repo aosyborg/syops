@@ -1,0 +1,83 @@
+<tal tal:define="global sidebar_active string:overview-${team.id}">
+<metal:main use-macro="load: ../layouts/user.pt">
+    <metal:slot fill-slot="head">
+        <link rel="stylesheet" type="text/css" href="/public/css/teams.css" />
+    </metal:slot>
+    <metal:slot fill-slot="javascript">
+        <script src="/public/js/teams.js"></script>
+    </metal:slot>
+
+    <div metal:fill-slot="content" id="content">
+        <div class="menubar">
+            <div class="page-title">${team.name}</div>
+            <div id="alert"></div>
+            <button class="btn btn-success pull-right" id="new-app-btn">
+                New Application
+            </button>
+        </div>
+
+        <div class="content-wrapper">
+            <table class="table">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Clone URL</th>
+                    <th>Github Owner</th>
+                    <th>Github Repo</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+                <tr tal:repeat="app apps" id="app-${app.id}">
+                    <td class="app-id">${app.id}</td>
+                    <td class="app-name">${app.name}</td>
+                    <td class="app-clone-url">${app.clone_url}</td>
+                    <td class="app-github-owner">${app.github_owner}</td>
+                    <td class="app-github-repo">${app.github_repo}</td>
+                    <td class="app-created">${app.insert_ts}</td>
+                    <td><a href="#" class="app-delete">X</a></td>
+                </tr>
+            </table>
+
+            <!-- App edit modal -->
+            <div class="modal fade" id="edit-app" roll="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">New Application</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" action="#" role="form">
+                                <input type="hidden" name="team_id" tal:attributes="value team.id" />
+                                <div class="form-group">
+                                    <label for="app-name">Name</label>
+                                    ${structure:app_form.get_element('name')}
+                                </div>
+                                <div class="form-group">
+                                    <label for="app-url">GitHub Clone URL</label>
+                                    ${structure:app_form.get_element('clone_url')}
+                                </div>
+                                <div class="form-group">
+                                    <label for="app-owner">GitHub Owner</label>
+                                    ${structure:app_form.get_element('github_owner')}
+                                </div>
+                                <div class="form-group">
+                                    <label for="app-repo">GitHub Repository</label>
+                                    ${structure:app_form.get_element('github_repo')}
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default"
+                            data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary"
+                                id="edit-app-save" data-dismiss="modal">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</metal:main>
+</tal>

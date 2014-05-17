@@ -25,4 +25,4 @@ class LoginForm(FormAbstract):
     def is_valid(self):
         email = self.elements['email'].value
         password = self.elements['password'].value
-        return User.build(email, password)
+        return User.login(email, password)

@@ -1,7 +1,20 @@
+from syopsui.modules.apiv1.views.app import App
 from syopsui.modules.apiv1.views.admin import Admin
 from pyramid import httpexceptions
 
 def add_routes(config):
+    # App
+    config.add_route('apiv1:app:edit', '/v1/app/edit')
+    config.add_view(App,
+                    route_name='apiv1:app:edit',
+                    attr='edit',
+                    renderer='json')
+    config.add_route('apiv1:app:delete', '/v1/app/delete')
+    config.add_view(App,
+                    route_name='apiv1:app:delete',
+                    attr='delete',
+                    renderer='json')
+
     # Admin
     config.add_route('apiv1:admin:edit-user', '/v1/admin/user/edit')
     config.add_view(Admin,
