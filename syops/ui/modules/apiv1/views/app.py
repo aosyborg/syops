@@ -1,6 +1,6 @@
 from syops.lib.view import Abstract
-from syops.ui.models.app import App as AppModel
-from syops.ui.models.release import Release as Release
+from syops.lib.models.app import App as AppModel
+from syops.lib.models.release import Release as Release
 from syops.ui.modules.default.forms.appeditform import AppEditForm
 from syops.ui.modules.default.forms.releaseform import ReleaseForm
 

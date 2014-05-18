@@ -1,7 +1,7 @@
 from syops.lib.view import Abstract
-from syops.ui.models.app import App
-from syops.ui.models.team import Team
-from syops.ui.models.debs import Debs
+from syops.lib.models.app import App
+from syops.lib.models.team import Team
+from syops.lib.models.debs import Debs
 from syops.ui.modules.default.forms.releaseform import ReleaseForm
 
 class Apps(Abstract):

@@ -1,7 +1,6 @@
 from pyramid.config import Configurator
 import pyramid_beaker
 
-from syops.lib.application import Application
 from syops.ui.modules.default import add_routes as add_default_routes
 from syops.ui.modules.apiv1 import add_routes as add_apiv1_routes
 
@@ -20,8 +19,8 @@ def main(global_config, **settings):
     config.set_session_factory(factory)
 
     # Bootstrap the application
+    from syops.lib.application import Application
     Application.bootstrap(settings)
-    Application.di()
 
     # Add modules
     add_default_routes(config)

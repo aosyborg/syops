@@ -2,6 +2,7 @@ import logging
 from ConfigParser import ConfigParser
 
 from syops.lib.datamanager import DataManager
+from syops.lib.models import Abstract as model_abstract
 
 class Application(object):
     SALT = ''
@@ -28,7 +29,7 @@ class Application(object):
 
         # Setup data manager
         data_manager = DataManager(parser)
-        Application.DATA_MANAGER = data_manager
+        model_abstract.data_manager = data_manager
 
         # Define packge destinations
         Application.PROD_PKG_DIR = parser.get('misc', 'production_pkgs')
@@ -40,8 +41,3 @@ class Application(object):
         # AWS
         Application.AWS_ACCESS_KEY_ID = parser.get('aws', 'access_key_id')
         Application.AWS_SECRET_ACCESS_KEY = parser.get('aws', 'secret_access_key')
-
-    @staticmethod
-    def di():
-        from syops.ui.models import Abstract as model_abstract
-        model_abstract.data_manager = Application.DATA_MANAGER

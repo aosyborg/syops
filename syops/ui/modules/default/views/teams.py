@@ -1,6 +1,6 @@
 from syops.lib.view import Abstract
-from syops.ui.models.app import App
-from syops.ui.models.team import Team
+from syops.lib.models.app import App
+from syops.lib.models.team import Team
 from syops.ui.modules.default.forms.appeditform import AppEditForm
 
 class Teams(Abstract):

@@ -4,7 +4,7 @@ import re
 import glob
 import boto.sqs
 
-from syops.ui.models import Abstract
+from syops.lib.models import Abstract
 from syops.lib.application import Application
 
 class Debs(Abstract):

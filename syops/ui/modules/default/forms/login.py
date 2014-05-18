@@ -1,6 +1,6 @@
 from syops.lib.form import Abstract as FormAbstract
 from syops.lib.form.elements.input import Input
-from syops.ui.models.user import User
+from syops.lib.models.user import User
 
 class LoginForm(FormAbstract):
     def init(self):

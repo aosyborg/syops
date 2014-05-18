@@ -1,5 +1,5 @@
 from hashlib import sha1
-from syops.ui.models import Abstract
+from syops.lib.models import Abstract
 from syops.lib.application import Application
 
 class App(Abstract):

@@ -3,8 +3,8 @@ import boto.sqs
 from boto.sqs.message import Message
 
 from syops.lib.application import Application
-from syops.ui.models import Abstract
-from syops.ui.models.app import App
+from syops.lib.models import Abstract
+from syops.lib.models.app import App
 
 class Release(Abstract):
 

@@ -1,6 +1,6 @@
 from syops.lib.view import Abstract
-from syops.ui.models.team import Team
-from syops.ui.models.user import User
+from syops.lib.models.team import Team
+from syops.lib.models.user import User
 from syops.ui.modules.default.forms.usereditform import UserEditForm
 from syops.ui.modules.default.forms.teameditform import TeamEditForm
 

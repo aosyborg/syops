@@ -1,7 +1,7 @@
 from syops.lib.form import Abstract as FormAbstract
 from syops.lib.form.elements.input import Input
 from syops.lib.form.validators.teamownerid import TeamOwnerId
-from syops.ui.models.team import Team
+from syops.lib.models.team import Team
 
 class TeamEditForm(FormAbstract):
     def init(self):

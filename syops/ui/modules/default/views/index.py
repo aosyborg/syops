@@ -1,5 +1,5 @@
 from syops.lib.view import Abstract
-from syops.ui.models.team import Team
+from syops.lib.models.team import Team
 
 class Index(Abstract):
 
