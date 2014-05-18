@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='syopsui',
+    name='syops',
     version='0.0.1-1',
-    description='Web code for SyOps',
-    long_description='Web code for SyOps',
+    description='DevOps made easy with github and aws',
+    long_description='DevOps made easy with github and aws',
     author='Dave Symons',
     author_email='symons@aospace.com',
     packages=find_packages(exclude=['tests']),
@@ -22,7 +22,7 @@ setup(
     scripts=[],
     entry_points="""\
     [paste.app_factory]
-    main = syopsui:main
+    main = syops.ui:main
     """,
 )
 
