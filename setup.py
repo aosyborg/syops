@@ -16,7 +16,8 @@ setup(
         'simplejson==3.1.0',
         'waitress',
         'psycopg2',
-        'ConfigParser'
+        'ConfigParser',
+        'boto'  # AWS SDK
     ],
     scripts=[],
     entry_points="""\

@@ -16,21 +16,30 @@
     <div id="wrapper">
         <div id="sidebar">
             <section id="sidebar-user">
+                <img src="/public/img/profile-${user_id}.jpg" alt="profile image" />
                 <span class="name">Dave Symons</span>
             </section>
 
-            <section tal:repeat="(team_id,team_app) team_apps.items()">
-                <h3>${team_app['name']}</h3>
-                <ul>
-                    <li><a href="/teams?id=${team_id}"
-                           tal:attributes="class python:'active' if sidebar_active ==
-                           'overview-%s' % team_id else ''">Overview</a>
-                    </li>
-                    <li tal:repeat="(app_id,app_name) python:team_app['apps'].items()">
-                        <a href="/apps?id=${app_id}"
-                           tal:attributes="class python:'active' if sidebar_active ==
-                           'apps-%s' % app_id else ''">${app_name}</a>
-                    </li>
+            <section>
+                <h3>Projects</h3>
+                <div  tal:repeat="(team_id,team_app) team_apps.items()">
+                    <a data-toggle="collapse" data-parent="div" href="#team-${team_id}">
+                        <i class="glyphicon glyphicon-globe"></i>
+                        ${team_app['name']}
+                        <i class="pull-right glyphicon glyphicon-chevron-down"></i>
+                    </a>
+                    <ul id="team-${team_id}" class="panel-collapse collapse">
+                        <li><a href="/teams?id=${team_id}"
+                               tal:attributes="class python:'active' if sidebar_active ==
+                               'overview-%s' % team_id else ''">Overview</a>
+                        </li>
+                        <li tal:repeat="(app_id,app_name) python:team_app['apps'].items()">
+                            <a href="/apps?id=${app_id}"
+                               tal:attributes="class python:'active' if sidebar_active ==
+                               'app-%s' % app_id else ''">${app_name}</a>
+                        </li>
+                    </ul>
+                </div>
             </section>
 
             <section>

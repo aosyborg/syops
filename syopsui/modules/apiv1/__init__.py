@@ -14,6 +14,11 @@ def add_routes(config):
                     route_name='apiv1:app:delete',
                     attr='delete',
                     renderer='json')
+    config.add_route('apiv1:app:new_release', '/v1/app/new_release')
+    config.add_view(App,
+                    route_name='apiv1:app:new_release',
+                    attr='new_release',
+                    renderer='json')
 
     # Admin
     config.add_route('apiv1:admin:edit-user', '/v1/admin/user/edit')

@@ -1,0 +1,31 @@
+#metrics {
+    background: linear-gradient(#303D4F, #435266) repeat scroll 0 0%, none repeat scroll 0 0 #686E78;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    box-shadow: 0 1px rgba(255, 255, 255, 0.3) inset;
+    margin-top: 30px;
+}
+#metrics .metric {
+    border-right: 1px solid #526075;
+    float: left;
+    padding: 23px 0;
+    text-align: center;
+    width: 25%;
+}
+#metrics .metric .field {
+    color: #F4F4F4;
+    display: inline-block;
+    font-size: 14px;
+    margin-bottom: 9px;
+}
+#metrics .metric .data {
+    color: #FFFFFF;
+    font-size: 27px;
+    text-shadow: 1px 1px #000000;
+}
+#metrics .metric .subtext {
+    color: #F4F4F4;
+    display: inline-block;
+    font-size: 14px;
+    margin-bottom: 9px;
+}

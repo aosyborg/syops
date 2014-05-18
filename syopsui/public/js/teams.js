@@ -12,6 +12,9 @@ Syops.prototype.modules.teams = function (base) {
      * Constructor
      */
     methods.init = function () {
+        // Open menu
+        $('#sidebar a.active').closest('div').find('ul:first').addClass('in');
+        console.log('got here');
     };
 
     /**

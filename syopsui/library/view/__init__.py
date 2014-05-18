@@ -15,7 +15,8 @@ class Abstract(object):
     def render(self, renderer_name, value, request=None, package=None):
         # Defaults
         page_variables = {
-            'page_title': 'SyOps'
+            'page_title': 'SyOps',
+            'user_id': self.session['user'].id
         }
         value = dict(page_variables.items() + value.items())
 

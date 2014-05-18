@@ -38,6 +38,9 @@ body {
     text-shadow: 1px 1px #000000;
     text-transform: uppercase;
 }
+#sidebar section > div {
+    margin-top: 10px;
+}
 #sidebar section ul {
     list-style-type: none;
     margin-bottom: 0;
@@ -47,7 +50,7 @@ body {
 #sidebar section ul li {
     margin: 3px 0;
 }
-#sidebar section ul li a {
+#sidebar section a {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
     color: #ECF6FF;
     display: inline-block;
@@ -58,10 +61,16 @@ body {
     transition: background 0.13s linear 0s;
     width: 100%;
 }
-#sidebar section ul li a:hover {
+#sidebar section a i {
+    margin-right: 10px;
+}
+#sidebar section ul li a {
+    padding-left: 53px;
+}
+#sidebar section a:hover {
     background: none repeat scroll 0 0 #343E4E;
 }
-#sidebar section ul li a.active {
+#sidebar section a.active {
     background: linear-gradient(#5B6479, #4C5566) repeat scroll 0 0%, none repeat scroll 0 0 #686E78;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.16) inset;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -73,9 +82,15 @@ body {
     margin-bottom: 20px;
     padding: 0 20px;
 }
+#sidebar-user img {
+    border-radius: 50%;
+    display: inline;
+    margin-right: 12px;
+    margin-top: 5px;
+    width: 51px;
+}
 #sidebar-user .name {
     color: #F0F5FA;
-    display: block;
     font-size: 15px;
     padding: 10px 0;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);

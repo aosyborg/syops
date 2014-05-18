@@ -14,6 +14,8 @@ Syops.prototype.modules.apps = function (base) {
      */
     methods.init = function () {
         constants.GITHUB_API = 'https://api.github.com';
+        // Open menu
+        $('#sidebar a.active').closest('div').find('ul:first').addClass('in');
     };
 
     /**
