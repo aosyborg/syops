@@ -13,6 +13,5 @@ coverage.xml
 build/
 dist/
 bin/
-lib/
 .idea/
 env*/
