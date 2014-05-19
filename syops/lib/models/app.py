@@ -10,7 +10,7 @@ class App(Abstract):
         if app_id:
             db_cursor = self.data_manager.get_db_cursor()
             db_cursor.execute('''
-                SELECT id, team_id, name, clone_url, github_owner, github_repo, insert_ts
+                SELECT *
                 FROM apps
                 WHERE id = %(app_id)s::BIGINT
                 LIMIT 1
@@ -24,13 +24,14 @@ class App(Abstract):
         self.clone_url = data.get('clone_url')
         self.github_owner = data.get('github_owner')
         self.github_repo = data.get('github_repo')
+        self.build_instructions = data.get('build_instructions')
         self.insert_ts = data.get('insert_ts')
 
     @staticmethod
     def get_list(team_id):
         db_cursor = App.data_manager.get_db_cursor()
         db_cursor.execute("""
-            SELECT a.id, a.name, a.clone_url, a.github_owner, a.github_repo, a.insert_ts
+            SELECT *
             FROM apps a
             WHERE a.team_id = %(team_id)s::BIGINT
         """, {'team_id': team_id})
@@ -43,14 +44,15 @@ class App(Abstract):
         db_cursor.execute('''
             SELECT * FROM set_app(%(id)s::BIGINT, %(team_id)s::BIGINT,
                 %(name)s::VARCHAR, %(clone_url)s::VARCHAR, %(github_owner)s::VARCHAR,
-                %(github_repo)s::VARCHAR)
+                %(github_repo)s::VARCHAR, %(build_instructions)s::TEXT)
         ''', {
             'id': self.id,
             'team_id': self.team_id,
             'name': self.name,
             'clone_url': self.clone_url,
             'github_owner': self.github_owner,
-            'github_repo': self.github_repo
+            'github_repo': self.github_repo,
+            'build_instructions': self.build_instructions,
         })
         row = db_cursor.fetchone()
         # Repopulate the object after successful save

@@ -23,6 +23,8 @@ def add_routes(config):
     # Apps
     config.add_route('default:apps:index', '/apps')
     config.add_view(Apps, route_name='default:apps:index', attr='overview')
+    config.add_route('default:app:edit', '/app/edit')
+    config.add_view(Apps, route_name='default:app:edit', attr='edit')
 
     # Admin
     config.add_route('default:admin:manage-teams', '/admin/teams')

@@ -12,7 +12,8 @@ var Syops = function () {
      */
     methods.init = function () {
         $.ajaxSetup({
-            cache: false
+            cache: false,
+            dataType: 'json'
         })
     };
 

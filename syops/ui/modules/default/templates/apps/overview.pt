@@ -1,6 +1,6 @@
 <tal tal:define="global sidebar_active string:app-${app.id}">
 <metal:main use-macro="load: ../layouts/user.pt">
-    <metal:slot fill-slot="head">overview
+    <metal:slot fill-slot="head">
         <link rel="stylesheet" type="text/css" href="/public/css/apps.css" />
     </metal:slot>
     <metal:slot fill-slot="javascript">

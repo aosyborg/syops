@@ -34,7 +34,12 @@
                     <td class="app-github-owner">${app.github_owner}</td>
                     <td class="app-github-repo">${app.github_repo}</td>
                     <td class="app-created">${app.insert_ts}</td>
-                    <td><a href="#" class="app-delete">X</a></td>
+                    <td>
+                        <a href="#" class="app-delete"><i class="glyphicon glyphicon-trash"></i></a>
+                        <a href="/app/edit?id=${app.id}" class="app-edit">
+                            <i class="glyphicon glyphicon-wrench"></i>
+                        </a>
+                    </td>
                 </tr>
             </table>
 

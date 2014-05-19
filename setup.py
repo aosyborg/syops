@@ -17,6 +17,7 @@ setup(
         'waitress',
         'psycopg2',
         'ConfigParser',
+        'httplib2',
         'boto'  # AWS SDK
     ],
     scripts=[],

@@ -1,13 +1,16 @@
 class Abstract(object):
-    def __init__(self, request=None):
+    def __init__(self, request=None, data={}):
         self.request = request
         self.elements = {}
         self.init()
 
+        # Pull params from request if present else use data
+        params = request.params if request else data
+
         # Populate form with request
         for name, element in self.elements.items():
-            if name in request.params:
-                element.set(request.params[name])
+            if name in params:
+                element.set(params[name])
 
     def init(self):
         pass

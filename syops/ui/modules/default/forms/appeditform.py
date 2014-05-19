@@ -1,5 +1,6 @@
 from syops.lib.form import Abstract as FormAbstract
 from syops.lib.form.elements.input import Input
+from syops.lib.form.elements.textarea import Textarea
 from syops.lib.form.validators.teamownerid import TeamOwnerId
 from syops.lib.models.team import Team
 
@@ -28,3 +29,10 @@ class AppEditForm(FormAbstract):
         url.add_attribute('class', 'form-control')
         url.add_attribute('id', 'app-repo')
         self.add_element(url)
+
+        # Build instructions
+        build = Textarea(name='build_instructions')
+        build.add_attribute('class', 'form-control')
+        build.add_attribute('id', 'app-build_instructions')
+        build.add_attribute('rows', '20')
+        self.add_element(build)

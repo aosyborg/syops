@@ -28,7 +28,6 @@ Syops.prototype.modules.apps = function (base) {
         $.ajax({
             url: constants.GITHUB_API + '/repos/'+owner+'/'+repo+'/branches',
             type: 'get',
-            dataType: 'json',
             success: function (branches) {
                 var html = '';
                 $.each(branches, function (index, branch) {
@@ -46,13 +45,35 @@ Syops.prototype.modules.apps = function (base) {
         $.ajax({
             url: '/v1/app/new_release',
             type: 'post',
-            dataType: 'json',
             data: form.serialize(),
             success: function (response) {
                 console.log(response)
             },
             error: function () {
                 base.alert('Error creating release.', 'danger');
+            },
+            complete: function () {
+            },
+        });
+    };
+
+    /**
+     * Saves app edits
+     */
+    methods.save_edit = function (form) {
+        $.ajax({
+            url: '/v1/app/edit',
+            type: 'post',
+            data: form.serialize(),
+            beforeSave: function () {
+                $('#save-edit-btn').before('<img src="/public/img/ajax-loader.gif" />');
+            },
+            success: function (response) {
+                var app_id = form.find('input[name="id"]').val();
+                window.location = "/apps?id=" + app_id;
+            },
+            error: function () {
+                base.alert('Error saving edit.', 'danger');
             },
             complete: function () {
             },
@@ -73,6 +94,12 @@ Syops.prototype.modules.apps = function (base) {
         // Create a release
         $('#edit-release-save').on('click', function(event) {
             methods.create_release($(this).closest('.modal-content').find('form'));
+        });
+    };
+    listeners.edit = function () {
+        // Save edits
+        $('#save-edit-btn').on('click', function (event) {
+            methods.save_edit($('.content-wrapper form'));
         });
     };
 
