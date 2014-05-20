@@ -1,6 +1,7 @@
 from hashlib import sha1
 from syops.lib.models import Abstract
 from syops.lib.application import Application
+from syops.lib.models.github import Github
 
 class User(Abstract):
 
@@ -60,6 +61,12 @@ class User(Abstract):
         rows = db_cursor.fetchall()
 
         return rows if rows else []
+
+    @staticmethod
+    def create_from_access_token(access_token):
+        params = {'access_token': access_token}
+        user_info = Github.get('/user', params=params)
+        print user_info
 
     def save(self):
         db_cursor = self.data_manager.get_db_cursor()

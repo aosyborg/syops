@@ -32,5 +32,9 @@ def add_routes(config):
     config.add_route('default:admin:manage-users', '/admin/users')
     config.add_view(Admin, route_name='default:admin:manage-users', attr='manage_users')
 
+    # OAuth
+    config.add_route('default:oauth:callback', '/oauth/callback')
+    config.add_view(Admin, route_name='default:oauth:callback', attr='add_user')
+
     # Error handling
     config.add_view(Error, context=httpexceptions.HTTPNotFound, attr='not_found')

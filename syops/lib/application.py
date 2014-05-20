@@ -11,6 +11,9 @@ class Application(object):
     AWS_ACCESS_KEY_ID = ''
     AWS_SECRET_ACCESS_KEY = ''
     DATA_MANAGER = None
+    OAUTH_GITHUB_CLIENT_ID = ''
+    OAUTH_GITHUB_CLIENT_SECRET = ''
+    OAUTH_GITHUB_URL = ''
 
     @staticmethod
     def bootstrap(settings={}):
@@ -41,3 +44,8 @@ class Application(object):
         # AWS
         Application.AWS_ACCESS_KEY_ID = parser.get('aws', 'access_key_id')
         Application.AWS_SECRET_ACCESS_KEY = parser.get('aws', 'secret_access_key')
+
+        # OAuth: GitHub
+        Application.OAUTH_GITHUB_CLIENT_ID = parser.get('oauth', 'github.client_id')
+        Application.OAUTH_GITHUB_CLIENT_SECRET = parser.get('oauth', 'github.client_secret')
+        Application.OAUTH_GITHUB_URL = parser.get('oauth', 'github.url')
