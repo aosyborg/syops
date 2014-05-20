@@ -1,4 +1,5 @@
 from syops.ui.modules.apiv1.views.app import App
+from syops.ui.modules.apiv1.views.team import Team
 from syops.ui.modules.apiv1.views.admin import Admin
 from pyramid import httpexceptions
 
@@ -18,6 +19,13 @@ def add_routes(config):
     config.add_view(App,
                     route_name='apiv1:app:new_release',
                     attr='new_release',
+                    renderer='json')
+
+    # Team
+    config.add_route('apiv1:team:list_repos', '/v1/team/list_repos')
+    config.add_view(Team,
+                    route_name='apiv1:team:list_repos',
+                    attr='list_repos',
                     renderer='json')
 
     # Admin

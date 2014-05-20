@@ -16,7 +16,8 @@ class Abstract(object):
         # Defaults
         page_variables = {
             'page_title': 'SyOps',
-            'user_id': self.session['user'].id if 'user' in self.session else 0
+            'user_id': self.session['user'].id if 'user' in self.session else 0,
+            'user': self.session['user'] if 'user' in self.session else None
         }
         value = dict(page_variables.items() + value.items())
 

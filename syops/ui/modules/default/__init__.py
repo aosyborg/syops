@@ -11,6 +11,8 @@ def add_routes(config):
     # User
     config.add_route('default:user:login', '/login')
     config.add_view(User, route_name='default:user:login', attr='login')
+    config.add_route('default:oauth:callback', '/oauth/callback')
+    config.add_view(User, route_name='default:oauth:callback', attr='oauth_callback')
 
     # Dashboard
     config.add_route('default:index:index', '/')
@@ -31,10 +33,6 @@ def add_routes(config):
     config.add_view(Admin, route_name='default:admin:manage-teams', attr='manage_teams')
     config.add_route('default:admin:manage-users', '/admin/users')
     config.add_view(Admin, route_name='default:admin:manage-users', attr='manage_users')
-
-    # OAuth
-    config.add_route('default:oauth:callback', '/oauth/callback')
-    config.add_view(Admin, route_name='default:oauth:callback', attr='add_user')
 
     # Error handling
     config.add_view(Error, context=httpexceptions.HTTPNotFound, attr='not_found')

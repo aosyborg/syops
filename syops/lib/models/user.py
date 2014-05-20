@@ -1,6 +1,7 @@
 from hashlib import sha1
 from syops.lib.models import Abstract
 from syops.lib.application import Application
+from syops.lib.models.team import Team
 from syops.lib.models.github import Github
 
 class User(Abstract):
@@ -11,7 +12,7 @@ class User(Abstract):
         if user_id:
             db_cursor = self.data_manager.get_db_cursor()
             db_cursor.execute('''
-                SELECT id, name, email, is_admin, insert_ts
+                SELECT *
                 FROM users
                 WHERE id = %(user_id)s::BIGINT
                 LIMIT 1
@@ -23,8 +24,27 @@ class User(Abstract):
         self.name = data.get('name')
         self.email = data.get('email')
         self.password = data.get('password')
+        self.access_token = data.get('access_token')
         self.is_admin = data.get('is_admin')
         self.insert_ts = data.get('insert_ts')
+
+    @staticmethod
+    def build_from_access_token(access_token):
+        user_info = Github.get('/user', access_token=access_token)
+        if not user_info:
+            return None
+
+        # Attempt to query for user based on email
+        db_cursor = User.data_manager.get_db_cursor()
+        db_cursor.execute("""
+            SELECT id FROM users where email = %(email)s::VARCHAR
+        """, {'email': user_info.get('email')})
+        row = db_cursor.fetchone()
+
+        # Instantiate user and set access token
+        user = User(row['id']) if row else User(data=user_info)
+        user.access_token = access_token
+        return user.save()
 
     @staticmethod
     def login(email, password):
@@ -62,27 +82,32 @@ class User(Abstract):
 
         return rows if rows else []
 
-    @staticmethod
-    def create_from_access_token(access_token):
-        params = {'access_token': access_token}
-        user_info = Github.get('/user', params=params)
-        print user_info
-
     def save(self):
         db_cursor = self.data_manager.get_db_cursor()
         db_cursor.execute('''
             SELECT * FROM set_user(%(id)s::BIGINT, %(email)s::VARCHAR,
-                %(password)s::VARCHAR, %(name)s::VARCHAR, %(is_admin)s::BOOLEAN)
+                %(password)s::VARCHAR, %(name)s::VARCHAR, %(access_token)s::VARCHAR,
+                %(is_admin)s::BOOLEAN)
         ''', {
             'id': self.id,
             'email': self.email,
             'password': self.password,
             'name': self.name,
+            'access_token': self.access_token,
             'is_admin': self.is_admin
         })
         row = db_cursor.fetchone()
+
+        # If this is a new user, create a team for them
+        if not self.id or self.id != row[0]:
+            team = Team()
+            team.owner_id = row[0]
+            team.name = 'My projects'
+            team.save()
+
         # Repopulate the object after successful save
         self.__init__(row[0])
+        return self
 
     def delete(self):
         if not self.id:

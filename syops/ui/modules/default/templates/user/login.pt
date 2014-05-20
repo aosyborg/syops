@@ -28,6 +28,13 @@
             </div>
 
             <button type="submit" class="btn btn-primary btn-lg">Login</button>
+
+            <span id="login-or">- OR -</span>
+
+            <a href="${github_login}" class="btn btn-default pull-right">
+                <img src="/public/img/GitHub-Mark-32px.png" />
+                Login with GitHub
+            </a>
         </form>
     </div>
 </metal:main>

@@ -22,8 +22,6 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Clone URL</th>
-                    <th>Github Owner</th>
-                    <th>Github Repo</th>
                     <th>Created</th>
                     <th>Actions</th>
                 </tr>
@@ -31,8 +29,6 @@
                     <td class="app-id">${app.id}</td>
                     <td class="app-name">${app.name}</td>
                     <td class="app-clone-url">${app.clone_url}</td>
-                    <td class="app-github-owner">${app.github_owner}</td>
-                    <td class="app-github-repo">${app.github_repo}</td>
                     <td class="app-created">${app.insert_ts}</td>
                     <td>
                         <a href="#" class="app-delete"><i class="glyphicon glyphicon-trash"></i></a>
@@ -56,20 +52,9 @@
                             <form method="post" action="#" role="form">
                                 <input type="hidden" name="team_id" tal:attributes="value team.id" />
                                 <div class="form-group">
-                                    <label for="app-name">Name</label>
-                                    ${structure:app_form.get_element('name')}
-                                </div>
-                                <div class="form-group">
-                                    <label for="app-url">GitHub Clone URL</label>
-                                    ${structure:app_form.get_element('clone_url')}
-                                </div>
-                                <div class="form-group">
-                                    <label for="app-owner">GitHub Owner</label>
-                                    ${structure:app_form.get_element('github_owner')}
-                                </div>
-                                <div class="form-group">
-                                    <label for="app-repo">GitHub Repository</label>
-                                    ${structure:app_form.get_element('github_repo')}
+                                    <label for="repo-list">Select Repository</label>
+                                    <select id="repo-list" class="form-control">
+                                    </select>
                                 </div>
                             </form>
                         </div>

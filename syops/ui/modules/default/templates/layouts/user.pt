@@ -42,7 +42,7 @@
                 </div>
             </section>
 
-            <section>
+            <section tal:condition="python: user and user.is_admin">
                 <h3>Admin:</h3>
                 <ul>
                     <li><a href="/admin/teams"

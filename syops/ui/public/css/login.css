@@ -11,3 +11,8 @@ form {
     max-width: 460px;
     padding: 42px 48px;
 }
+
+#login-or {
+    margin-left: 30px;
+    font-weight: bold;
+}

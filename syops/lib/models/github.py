@@ -10,23 +10,21 @@ class Github(object):
 
     @staticmethod
     def post(path, params={}, access_token=None):
-        headers = {}
         if access_token:
-            headers['Authorization'] = 'token %s' % access_token
+            params['access_token'] = access_token
 
         url = '%s://%s%s' % (Github.PROTOCAL, Github.BASE_URL, path)
         headers, content = Http().request(url, 'POST', urlencode(params))
-        return content
+        return json.loads(content)
 
     @staticmethod
     def get(path, params={}, access_token=None):
-        headers = {}
         if access_token:
-            headers['Authorization'] = 'token %s' % access_token
+            params['access_token'] = access_token
 
         url = '%s://%s%s?%s' % (Github.PROTOCAL, Github.BASE_URL, path,urlencode(params))
         headers, content = Http().request(url, 'GET')
-        return content
+        return json.loads(content)
 
     @staticmethod
     def get_access_token(code):
