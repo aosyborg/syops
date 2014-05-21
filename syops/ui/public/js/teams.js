@@ -19,33 +19,28 @@ Syops.prototype.modules.teams = function (base) {
     /**
      * Saves an app edit (new or modification)
      */
-    methods.save_app_form = function (form) {
-        var repo = form.find('#repo-list option:selected');
+    methods.save_app_form = function (event) {
+        event.preventDefault();
+        var repo = $(this);
         $.ajax({
             url: '/v1/app/edit',
             type: 'post',
             dataType: 'json',
             data: {
-                team_id: form.find('input[name="team_id"]').val(),
+                team_id: repo.closest('form').find('[name="team_id"]').val(),
                 name: repo.data('name'),
                 clone_url: repo.data('clone_url'),
                 github_owner: repo.data('owner'),
                 github_repo: repo.data('name'),
             },
             success: function (response) {
-                var html = '<tr id="app-'+response.id+'">' +
-                    '<td class="app-id">'+response.id+'</td>' +
-                    '<td class="app-name">'+response.name+'</td>' +
-                    '<td class="app-clone-url">'+response.clone_url+'</td>' +
-                    '<td class="app-created">'+response.insert_ts+'</td>' +
-                    '<td><a href="#" class="app-delete">X</a></td>' +
-                '</tr>';
-                $('#content table').append(html);
+                location.reload();
             },
             error: function () {
                 base.alert('Error saving applicaiton.', 'danger');
             },
             complete: function () {
+                repo.closest('.modal').modal('hide');
             },
         });
     };
@@ -63,9 +58,7 @@ Syops.prototype.modules.teams = function (base) {
                     base.alert('Error deleting application.', 'danger');
                     return;
                 }
-                $('#app-' + app_id).fadeOut('fast', function () {
-                    $(this).remove();
-                });
+                location.reload();
             },
             error: function () {
                 base.alert('Error deleting application.', 'danger');
@@ -89,11 +82,23 @@ Syops.prototype.modules.teams = function (base) {
                 var html = '';
                 $.each(repos, function (index, repo) {
                     html += '' +
-                        '<option data-name="'+repo.name+'" '+
+                        '<div class="list-group">'+
+                            '<a href="#" class="list-group-item"' +
+                                'data-name="'+repo.name+'" '+
                                 'data-owner="'+repo.owner.login+'" '+
                                 'data-clone_url="'+repo.ssh_url+'"> '+
-                                repo.name
-                        '</option>';
+                                '<div class="row">'+
+                                    '<div class="col-md-1">'+
+                                        '<i class="mega-octicon octicon-repo"></i>'+
+                                    '</div>'+
+                                    '<div class="col-md-11">'+
+                                        '<strong>'+repo.name+'</strong>'+
+                                        '<p class="list-group-item-text">'+repo.description+'</p>'+
+                                        '<div class="text-muted">Last updated '+repo.updated_at+'</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</a>'+
+                        '</div>';
                 });
                 $('#repo-list').html(html);
             }
@@ -107,9 +112,7 @@ Syops.prototype.modules.teams = function (base) {
         // New App
         $('#new-app-btn').on('click', methods.open_new_app_modal);
         // Save team edits
-        $('#edit-app-save').on('click', function(event) {
-            methods.save_app_form($(this).closest('.modal-content').find('form'));
-        });
+        $('#edit-app .list-group').on('click', '.list-group-item', methods.save_app_form);
         // Delete app
         $('.content-wrapper table').on('click', '.app-delete', function (event) {
             event.preventDefault();

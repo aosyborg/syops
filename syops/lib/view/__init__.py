@@ -5,12 +5,13 @@ class Abstract(object):
     def __init__(self, request):
         self.request = request
         self.session = request.session
-        self.init()
 
-    def init(self):
-        # TODO: Fix this
-        if not 'user' in self.session and self.request.view_name != 'login':
-            return self.redirect('/login')
+    def __call__(self):
+        pass
+        #if not 'user' in self.session and self.request.view_name != 'login':
+        #    def redirect():
+        #        return self.redirect('/login')
+        #    return redirect
 
     def render(self, renderer_name, value, request=None, package=None):
         # Defaults

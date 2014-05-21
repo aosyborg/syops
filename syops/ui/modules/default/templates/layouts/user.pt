@@ -18,9 +18,15 @@
             <section id="sidebar-user">
                 <img src="/public/img/profile-${user_id}.jpg" alt="profile image" />
                 <span class="name">Dave Symons</span>
+                <div class="popover-content hide">
+                    <ul>
+                        <li><a href="#">Add organization</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    </ul>
+                </div>
             </section>
 
-            <section>
+            <section class="projects">
                 <h3>Projects</h3>
                 <div  tal:repeat="(team_id,team_app) team_apps.items()">
                     <a data-toggle="collapse" data-parent="div" href="#team-${team_id}">
@@ -75,6 +81,30 @@
                     data-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary"
                     data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add organization modal -->
+    <div class="modal fade" id="add-organization" roll="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Add Organization</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="#" role="form">
+                        <input type="hidden" name="team_id" tal:attributes="value team.id" />
+                        <div class="form-group">
+                            <div class="list-group" id="org-repo-list">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
                 </div>
             </div>
         </div>

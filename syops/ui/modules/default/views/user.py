@@ -34,6 +34,10 @@ class User(Abstract):
             'syops.ui:modules/default/templates/user/login.pt',
             values, request=self.request)
 
+    def logout(self):
+        self.session.pop('user', None)
+        return self.redirect('/login')
+
     # Note: called after user authenticates via oauth
     def oauth_callback(self):
         oauth_code = self.request.params.get('code')

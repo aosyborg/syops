@@ -11,6 +11,8 @@ def add_routes(config):
     # User
     config.add_route('default:user:login', '/login')
     config.add_view(User, route_name='default:user:login', attr='login')
+    config.add_route('default:user:logout', '/logout')
+    config.add_view(User, route_name='default:user:logout', attr='logout')
     config.add_route('default:oauth:callback', '/oauth/callback')
     config.add_view(User, route_name='default:oauth:callback', attr='oauth_callback')
 

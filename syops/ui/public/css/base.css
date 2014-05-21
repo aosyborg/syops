@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "octicons";
+    font-style: normal;
+    font-weight: normal;
+    src: url("/public/fonts/octicons.woff") format("woff");
+}
 body {
     background: none repeat scroll 0 0 #F2F5F8;
     font-family: "Open Sans",Arial,Helvetica,Sans-Serif;
@@ -11,7 +17,9 @@ body {
     padding: 15px;
     margin-bottom: 1em;
 }
-
+.list-group-item {
+    transition: background 0.13s linear 0s;
+}
 #wapper {
     position: relative;
     margin: 0 auto;
@@ -38,19 +46,19 @@ body {
     text-shadow: 1px 1px #000000;
     text-transform: uppercase;
 }
-#sidebar section > div {
+#sidebar section.projects > div {
     margin-top: 10px;
 }
-#sidebar section ul {
+#sidebar section.projects ul {
     list-style-type: none;
     margin-bottom: 0;
     margin-top: 15px;
     padding-left: 0;
 }
-#sidebar section ul li {
+#sidebar section.projects ul li {
     margin: 3px 0;
 }
-#sidebar section a {
+#sidebar section.projects a {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
     color: #ECF6FF;
     display: inline-block;
@@ -61,13 +69,13 @@ body {
     transition: background 0.13s linear 0s;
     width: 100%;
 }
-#sidebar section a i {
+#sidebar section.projects a i {
     margin-right: 10px;
 }
-#sidebar section ul li a {
+#sidebar section.projects ul li a {
     padding-left: 53px;
 }
-#sidebar section a:hover {
+#sidebar section.projects a:hover {
     background: none repeat scroll 0 0 #343E4E;
 }
 #sidebar section a.active {
@@ -95,7 +103,25 @@ body {
     padding: 10px 0;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
-
+#sidebar-user .popover-content {
+    padding-bottom: 0;
+}
+#sidebar-user .popover-content ul {
+    list-style-type: none;
+    padding: 8px 0;
+}
+#sidebar-user .popover-content ul li {
+    border-bottom: 1px solid #E6E6E6;
+    padding: 8px 15px;
+}
+#sidebar-user .popover-content ul a {
+    color: #4C5661;
+    display: block;
+    font-size: 15px;
+    padding-left: 10px;
+    text-decoration: none;
+    transition: all 0.2s linear 0s;
+}
 #content {
     background: none repeat scroll 0 0 #FFFFFF;
     margin-left: 230px;
@@ -126,5 +152,20 @@ body {
 #alert {
     display: inline-block;
     padding: 15px;
-    width: 900px;
+    width: 775px;
+}
+
+/** Octicons **/
+.octicon {
+    display: inline-block;
+    font: 16px/1 "octicons";
+    text-decoration: none;
+}
+.mega-octicon {
+    display: inline-block;
+    font: 32px/1 octicons;
+    text-decoration: none;
+}
+.octicon-repo:before {
+    content: "\f001";
 }

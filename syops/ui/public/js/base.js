@@ -15,6 +15,12 @@ var Syops = function () {
             cache: false,
             dataType: 'json'
         })
+        // Add user popover
+        $('#sidebar-user img, #sidebar-user .name').popover({
+            placement: 'bottom',
+            html: true,
+            content: $('#sidebar-user .popover-content').html()
+        });
     };
 
     /**
@@ -50,9 +56,14 @@ var Syops = function () {
      * Catastrophic alerts
      */
     this.alert = function (message, style) {
-        $('#alert').removeClass(function (index, css) {
-            return (css.match(/\bbg-\S+/g) || []).join(' ');
-        }).addClass('bg-' + style).text(message).fadeIn();
+        var close = '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>';
+        $('#alert').attr('class', 'bg-' + style).html(message + close).fadeIn();
+    };
+
+    /**
+     * Listeners: Add organization
+     */
+    listeners.add_organization = function () {
     };
 
     /**

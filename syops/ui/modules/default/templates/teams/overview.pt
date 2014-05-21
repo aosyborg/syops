@@ -10,7 +10,7 @@
     <div metal:fill-slot="content" id="content">
         <div class="menubar">
             <div class="page-title">${team.name}</div>
-            <div id="alert"></div>
+            <div id="alert"> </div>
             <button class="btn btn-success pull-right" id="new-app-btn">
                 New Application
             </button>
@@ -52,17 +52,19 @@
                             <form method="post" action="#" role="form">
                                 <input type="hidden" name="team_id" tal:attributes="value team.id" />
                                 <div class="form-group">
-                                    <label for="repo-list">Select Repository</label>
-                                    <select id="repo-list" class="form-control">
-                                    </select>
+                                    <h3>Select Repository</h3>
+                                    <div class="list-group" id="repo-list">
+                                    </div>
                                 </div>
                             </form>
                         </div>
                         <div class="modal-footer">
+                            <!--
                             <button type="button" class="btn btn-default"
                             data-dismiss="modal">Cancel</button>
                             <button type="button" class="btn btn-primary"
                                 id="edit-app-save" data-dismiss="modal">Save</button>
+                            -->
                         </div>
                     </div>
                 </div>
