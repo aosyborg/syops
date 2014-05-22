@@ -61,9 +61,26 @@ var Syops = function () {
     };
 
     /**
+     * Shows the modal to add an organization
+     */
+    methods.show_add_org_modal = function (event) {
+        var modal = $('#add-organization');
+        $.ajax({
+            url: '/v1/team/list_orgs',
+            beforeSend: function () {
+                modal.modal('show');
+            },
+            success: function (orgs) {
+                console.log(orgs);
+            }
+        });
+    };
+
+    /**
      * Listeners: Add organization
      */
     listeners.add_organization = function () {
+        $('#sidebar-user').on('click', '#add-org', methods.show_add_org_modal);
     };
 
     /**

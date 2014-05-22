@@ -27,6 +27,11 @@ def add_routes(config):
                     route_name='apiv1:team:list_repos',
                     attr='list_repos',
                     renderer='json')
+    config.add_route('apiv1:team:list_orgs', '/v1/team/list_orgs')
+    config.add_view(Team,
+                    route_name='apiv1:team:list_orgs',
+                    attr='list_orgs',
+                    renderer='json')
 
     # Admin
     config.add_route('apiv1:admin:edit-user', '/v1/admin/user/edit')

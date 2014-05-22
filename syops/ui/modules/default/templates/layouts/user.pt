@@ -20,7 +20,7 @@
                 <span class="name">Dave Symons</span>
                 <div class="popover-content hide">
                     <ul>
-                        <li><a href="#">Add organization</a></li>
+                        <li><a href="#" id="add-org">Add organization</a></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
                 </div>
@@ -97,7 +97,6 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" action="#" role="form">
-                        <input type="hidden" name="team_id" tal:attributes="value team.id" />
                         <div class="form-group">
                             <div class="list-group" id="org-repo-list">
                             </div>
