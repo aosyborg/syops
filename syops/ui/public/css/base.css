@@ -169,3 +169,8 @@ body {
 .octicon-repo:before {
     content: "\f001";
 }
+
+/** Organization modal **/
+#add-organization .modal-body img {
+    width: 35px;
+}

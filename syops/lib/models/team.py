@@ -10,7 +10,7 @@ class Team(Abstract):
         if team_id:
             db_cursor = self.data_manager.get_db_cursor()
             db_cursor.execute('''
-                SELECT id, user_id as owner_id, name, insert_ts
+                SELECT *
                 FROM teams
                 WHERE id = %(team_id)s::BIGINT
                 LIMIT 1
@@ -21,6 +21,7 @@ class Team(Abstract):
         self.id = data.get('id')
         self.owner_id = data.get('owner_id')
         self.name = data.get('name')
+        self.is_organization = data.get('is_organization')
         self.insert_ts = data.get('insert_ts')
 
     @staticmethod
@@ -68,11 +69,12 @@ class Team(Abstract):
         db_cursor = self.data_manager.get_db_cursor()
         db_cursor.execute('''
             SELECT * FROM set_team(%(id)s::BIGINT, %(name)s::VARCHAR,
-                %(owner_id)s::BIGINT)
+                %(owner_id)s::BIGINT, %(is_org)s::BOOLEAN)
         ''', {
             'id': self.id,
             'name': self.name,
-            'owner_id': self.owner_id
+            'owner_id': self.owner_id,
+            'is_org': self.is_organization,
         })
         row = db_cursor.fetchone()
         # Repopulate the object after successful save

@@ -26,4 +26,4 @@ class App(Abstract):
             return form.get_errors()
 
         release = Release(data=self.request.params)
-        return release.create()
+        return release.save()

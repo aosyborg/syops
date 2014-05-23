@@ -16,5 +16,6 @@ BEGIN;
 \i ../schema/functions/set_user.sql
 \i ../schema/functions/set_team.sql
 \i ../schema/functions/set_app.sql
+\i ../schema/functions/set_release.sql
 
 COMMIT;

@@ -11,6 +11,10 @@ class TeamEditForm(FormAbstract):
         email.add_attribute('id', 'team-name')
         self.add_element(email)
 
+        # Is organization
+        org = Input(name='is_organization', type='input')
+        self.add_element(org)
+
         # Owner
         owner = Input(name='owner_id', type="hidden")
         owner.add_validator(TeamOwnerId())

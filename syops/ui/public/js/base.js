@@ -65,13 +65,48 @@ var Syops = function () {
      */
     methods.show_add_org_modal = function (event) {
         var modal = $('#add-organization');
+        $('#sidebar-user img, #sidebar-user .name').popover('hide');
         $.ajax({
             url: '/v1/team/list_orgs',
             beforeSend: function () {
                 modal.modal('show');
             },
             success: function (orgs) {
-                console.log(orgs);
+                var html = '';
+                $.each(orgs, function (index, org) {
+                    html += ''+
+                        '<div class="list-group">'+
+                            '<a href="#" class="list-group-item" '+
+                                'data-name="'+org.login+'">'+
+                                '<div class="row">'+
+                                    '<div class="col-md-1">'+
+                                        '<img src="'+org.avatar_url+'">'+
+                                    '</div>'+
+                                    '<div class="col-md-11">'+
+                                        org.login+
+                                    '</div>'+
+                                '</div>'+
+                            '</a>'+
+                        '</div>';
+                    modal.find('.list-group').html(html);
+                });
+            }
+        });
+    };
+
+    /**
+     * Saves new organization
+     */
+    methods.add_organization = function (event) {
+        var name = $(this).data('name');
+        $.ajax({
+            url: '/v1/admin/team/edit',
+            data: {
+                name: name,
+                is_organization: true
+            },
+            success: function (response) {
+                window.location = '/teams?id=' + response.id
             }
         });
     };
@@ -81,6 +116,7 @@ var Syops = function () {
      */
     listeners.add_organization = function () {
         $('#sidebar-user').on('click', '#add-org', methods.show_add_org_modal);
+        $('#add-organization .modal-body').on('click', 'a', methods.add_organization);
     };
 
     /**

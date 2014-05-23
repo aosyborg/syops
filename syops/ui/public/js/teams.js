@@ -72,12 +72,10 @@ Syops.prototype.modules.teams = function (base) {
      * Queries for list of repos and displays them in modal
      */
     methods.open_new_app_modal = function (event) {
-        var modal = $('#edit-app');
+        var modal = $('#edit-app').modal();
         $.ajax({
             url: '/v1/team/list_repos',
-            beforeSend: function () {
-                modal.modal();
-            },
+            data: {team_id:modal.find('[name="team_id"]').val()},
             success: function (repos) {
                 var html = '';
                 $.each(repos, function (index, repo) {

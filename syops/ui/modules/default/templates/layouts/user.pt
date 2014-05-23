@@ -96,12 +96,8 @@
                     <h4 class="modal-title">Add Organization</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="#" role="form">
-                        <div class="form-group">
-                            <div class="list-group" id="org-repo-list">
-                            </div>
-                        </div>
-                    </form>
+                    <div class="list-group" id="org-repo-list">
+                    </div>
                 </div>
                 <div class="modal-footer">
                 </div>

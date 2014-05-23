@@ -59,25 +59,19 @@
                     <th>Id</th>
                     <th>Status</th>
                     <th>Version</th>
-                    <th>Step</th>
+                    <th>Tagged Branch</th>
+                    <th>Description</th>
                     <th>Last Updated</th>
                     <th>Actions</th>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>In QA</td>
-                    <td>v0.2-3</td>
-                    <td>In QA</td>
-                    <td>2014-05-14 @ 11:11</td>
-                    <td>Release to prod</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>In production</td>
-                    <td>v0.1-1</td>
-                    <td>In Prod</td>
-                    <td>2014-05-01 @ 11:11</td>
-                    <td></td>
+                <tr tal:repeat="release releases" id="release-${release.id}">
+                    <td>${release.id}</td>
+                    <td>${release.status}</td>
+                    <td>${release.version}</td>
+                    <td>${release.tagged_branch}</td>
+                    <td>${release.description}</td>
+                    <td>${release.update_ts}</td>
+                    <td>&nbsp;</td>
                 </tr>
             </table>
 
