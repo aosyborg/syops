@@ -22,12 +22,11 @@ Syops.prototype.modules.apps = function (base) {
      * Populates branch select
      */
     methods.populate_branches = function () {
-        var wrapper = $('.content-wrapper'),
-            owner = wrapper.data('github-owner'),
-            repo = wrapper.data('github-repo');
+        var app_id = $('.content-wrapper').data('app-id');
         $.ajax({
-            url: constants.GITHUB_API + '/repos/'+owner+'/'+repo+'/branches',
+            url: '/v1/app/list_branches',
             type: 'get',
+            data: {app_id: app_id},
             success: function (branches) {
                 var html = '';
                 $.each(branches, function (index, branch) {

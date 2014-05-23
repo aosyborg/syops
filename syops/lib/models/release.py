@@ -11,7 +11,7 @@ class Release(Abstract):
     def __init__(self, data={}):
         self.id = data.get('id')
         self.app_id = data.get('app_id')
-        self.release_status_id = data.get('release_status_id')
+        self.release_status_id = data.get('release_status_id', 1)
         self.version = data.get('version')
         self.tagged_branch = data.get('tagged_branch')
         self.description = data.get('description')

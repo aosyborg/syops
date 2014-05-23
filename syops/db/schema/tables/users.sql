@@ -5,6 +5,7 @@ CREATE TABLE public.users (
     password CHAR(40),
     name VARCHAR(255) NOT NULL,
     access_token VARCHAR(255) NOT NULL,
+    avatar_url VARCHAR(255) NOT NULL,
     is_admin BOOLEAN NOT NULL DEFAULT FALSE,
     insert_ts TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

@@ -54,6 +54,7 @@
                                 <div class="form-group">
                                     <h3>Select Repository</h3>
                                     <div class="list-group" id="repo-list">
+                                        <img src="/public/img/ajax-loader-lrg.gif" class="ajax-loader">
                                     </div>
                                 </div>
                             </form>

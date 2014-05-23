@@ -16,14 +16,8 @@
     <div id="wrapper">
         <div id="sidebar">
             <section id="sidebar-user">
-                <img src="/public/img/profile-${user_id}.jpg" alt="profile image" />
+                <img src="${user.avatar_url}" alt="profile image" />
                 <span class="name">Dave Symons</span>
-                <div class="popover-content hide">
-                    <ul>
-                        <li><a href="#" id="add-org">Add organization</a></li>
-                        <li><a href="/logout">Logout</a></li>
-                    </ul>
-                </div>
             </section>
 
             <section class="projects">
@@ -59,6 +53,13 @@
                            'admin-users' else ''">Manage users</a></li>
                 </ul>
             </section>
+
+            <footer>
+                <ul>
+                    <li><a href="#" id="add-org"><i class="octicon octicon-organization"></i></a></li>
+                    <li><a href="/logout"><i class="octicon octicon-signout"></i></a></li>
+                </ul>
+            </footer>
         </div>
 
         <div metal:define-slot="content"></div>
@@ -97,6 +98,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="list-group" id="org-repo-list">
+                        <img src="/public/img/ajax-loader-lrg.gif" class="ajax-loader">
                     </div>
                 </div>
                 <div class="modal-footer">

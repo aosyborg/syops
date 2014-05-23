@@ -20,6 +20,11 @@ body {
 .list-group-item {
     transition: background 0.13s linear 0s;
 }
+.ajax-loader {
+    display: block;
+    margin: 10px auto;
+    width: 128px;
+}
 #wapper {
     position: relative;
     margin: 0 auto;
@@ -82,6 +87,31 @@ body {
     background: linear-gradient(#5B6479, #4C5566) repeat scroll 0 0%, none repeat scroll 0 0 #686E78;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25), 0 1px 0 rgba(255, 255, 255, 0.16) inset;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+#sidebar footer {
+    bottom: 0;
+    position: fixed;
+    width: 230px;
+}
+#sidebar footer > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#sidebar footer > ul > li {
+    border-right: 1px solid #3E4E55;
+    border-top: 1px solid #3E4E55;
+    display: block;
+    float: left;
+    width: 50%;
+}
+#sidebar footer > ul > li > a {
+    background: none repeat scroll 0 0 #333D4B;
+    color: #ECF6FF;
+    display: block;
+    padding: 6px 0;
+    position: relative;
+    text-align: center;
 }
 #sidebar-user {
     background: linear-gradient(#3D4A5D, #3F4C5C) repeat scroll 0 0%, none repeat scroll 0 0 #686E78;
@@ -169,8 +199,14 @@ body {
 .octicon-repo:before {
     content: "\f001";
 }
+.octicon-organization:before {
+    content: "\f037";
+}
+.octicon-signout:before {
+    content: "\f032";
+}
 
 /** Organization modal **/
-#add-organization .modal-body img {
+#add-organization .modal-body .list-group-item img {
     width: 35px;
 }

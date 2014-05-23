@@ -25,6 +25,7 @@ class User(Abstract):
         self.email = data.get('email')
         self.password = data.get('password')
         self.access_token = data.get('access_token')
+        self.avatar_url = data.get('avatar_url')
         self.is_admin = data.get('is_admin')
         self.insert_ts = data.get('insert_ts')
 
@@ -69,31 +70,19 @@ class User(Abstract):
         # If a user was found build and return that object
         return User(row['id'])
 
-    @staticmethod
-    def get_list(offset=0):
-        db_cursor = User.data_manager.get_db_cursor()
-        db_cursor.execute("""
-            SELECT id as user_id, name, email, is_admin, insert_ts
-            FROM users
-            OFFSET %(offset)s::INTEGER
-            LIMIT 20
-        """, { 'offset': offset })
-        rows = db_cursor.fetchall()
-
-        return rows if rows else []
-
     def save(self):
         db_cursor = self.data_manager.get_db_cursor()
         db_cursor.execute('''
             SELECT * FROM set_user(%(id)s::BIGINT, %(email)s::VARCHAR,
                 %(password)s::VARCHAR, %(name)s::VARCHAR, %(access_token)s::VARCHAR,
-                %(is_admin)s::BOOLEAN)
+                %(avatar_url)s::VARCHAR, %(is_admin)s::BOOLEAN)
         ''', {
             'id': self.id,
             'email': self.email,
             'password': self.password,
             'name': self.name,
             'access_token': self.access_token,
+            'avatar_url': self.avatar_url,
             'is_admin': self.is_admin
         })
         row = db_cursor.fetchone()

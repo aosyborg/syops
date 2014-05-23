@@ -25,24 +25,6 @@ class Team(Abstract):
         self.insert_ts = data.get('insert_ts')
 
     @staticmethod
-    def get_list(user_id):
-        db_cursor = Team.data_manager.get_db_cursor()
-        db_cursor.execute("""
-            SELECT t.id as team_id, t.name as team_name, t.insert_ts as created,
-                   u.id as owner_id, u.name as owner_name,
-                   tmp.count as member_count
-            FROM teams t
-            LEFT JOIN team_users ts ON t.id = ts.team_id
-            JOIN users u ON ts.user_id = u.id
-            JOIN (SELECT team_id, COUNT(*) AS count FROM team_users GROUP BY team_id) AS tmp
-                ON tmp.team_id = t.id
-            WHERE ts.user_id = %(user_id)s::BIGINT
-        """, {'user_id': user_id})
-        rows = db_cursor.fetchall()
-
-        return rows if rows else []
-
-    @staticmethod
     def get_team_apps(user_id):
         db_cursor = Team.data_manager.get_db_cursor()
         db_cursor.execute("""

@@ -3,7 +3,6 @@ from pyramid import httpexceptions
 from syops.ui.modules.default.views.index import Index
 from syops.ui.modules.default.views.user import User
 from syops.ui.modules.default.views.teams import Teams
-from syops.ui.modules.default.views.admin import Admin
 from syops.ui.modules.default.views.error import Error
 from syops.ui.modules.default.views.apps import Apps
 
@@ -29,12 +28,6 @@ def add_routes(config):
     config.add_view(Apps, route_name='default:apps:index', attr='overview')
     config.add_route('default:app:edit', '/app/edit')
     config.add_view(Apps, route_name='default:app:edit', attr='edit')
-
-    # Admin
-    config.add_route('default:admin:manage-teams', '/admin/teams')
-    config.add_view(Admin, route_name='default:admin:manage-teams', attr='manage_teams')
-    config.add_route('default:admin:manage-users', '/admin/users')
-    config.add_view(Admin, route_name='default:admin:manage-users', attr='manage_users')
 
     # Error handling
     config.add_view(Error, context=httpexceptions.HTTPNotFound, attr='not_found')

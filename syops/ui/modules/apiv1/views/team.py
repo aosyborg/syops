@@ -1,8 +1,23 @@
 from syops.lib.view import Abstract
 from syops.lib.models.team import Team as TeamModel
 from syops.lib.models.github import Github
+from syops.ui.modules.default.forms.teameditform import TeamEditForm
 
 class Team(Abstract):
+
+    def edit(self):
+        form = TeamEditForm(self.request)
+        if not form.is_valid():
+            return form.get_errors()
+
+        team = TeamModel(data=form.get_data())
+        team.save()
+        return team.to_json()
+
+    def delete(self):
+        team_id = self.request.params.get('team_id')
+        team = Team(team_id)
+        return team.delete()
 
     def list_orgs(self):
         user = self.session['user']

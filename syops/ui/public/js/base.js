@@ -15,12 +15,6 @@ var Syops = function () {
             cache: false,
             dataType: 'json'
         })
-        // Add user popover
-        $('#sidebar-user img, #sidebar-user .name').popover({
-            placement: 'bottom',
-            html: true,
-            content: $('#sidebar-user .popover-content').html()
-        });
     };
 
     /**
@@ -65,7 +59,6 @@ var Syops = function () {
      */
     methods.show_add_org_modal = function (event) {
         var modal = $('#add-organization');
-        $('#sidebar-user img, #sidebar-user .name').popover('hide');
         $.ajax({
             url: '/v1/team/list_orgs',
             beforeSend: function () {
@@ -100,7 +93,7 @@ var Syops = function () {
     methods.add_organization = function (event) {
         var name = $(this).data('name');
         $.ajax({
-            url: '/v1/admin/team/edit',
+            url: '/v1/team/edit',
             data: {
                 name: name,
                 is_organization: true
@@ -115,7 +108,7 @@ var Syops = function () {
      * Listeners: Add organization
      */
     listeners.add_organization = function () {
-        $('#sidebar-user').on('click', '#add-org', methods.show_add_org_modal);
+        $('#add-org').on('click', methods.show_add_org_modal);
         $('#add-organization .modal-body').on('click', 'a', methods.add_organization);
     };
 
