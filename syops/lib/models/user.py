@@ -45,6 +45,7 @@ class User(Abstract):
         # Instantiate user and set access token
         user = User(row['id']) if row else User(data=user_info)
         user.access_token = access_token
+        user.avatar_url = user_info.get('avatar_url')
         return user.save()
 
     @staticmethod
