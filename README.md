@@ -1,31 +1,5 @@
 # SyOps
 
-## Config
-By default SyOps looks at /opt/syops/config.ini. Here are the needed fields:
-```
-[db]
-host = 
-port = 
-username = 
-password = 
-name = 
-
-[oauth]
-github.client_id = 
-github.client_secret = 
-github.url = https://github.com/login/oauth/authorize
-
-[aws]
-access_key_id = 
-secret_access_key = 
-
-[misc]
-salt = 
-production_pkgs = /some/path/to/place/pkgs
-qa_pkgs = /some/path/to/place/pkgs
-log_level = INFO
-```
-
 ## Installation
 1. Clone the repository
 ```
