@@ -10,7 +10,6 @@
 .tox/
 nosetests.xml
 coverage.xml
-build/
 dist/
 bin/
 .idea/

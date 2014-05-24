@@ -20,6 +20,7 @@ class Team(Abstract):
         # Populate object
         self.id = data.get('id')
         self.owner_id = data.get('owner_id')
+        self.user_id = data.get('user_id')
         self.name = data.get('name')
         self.is_organization = data.get('is_organization')
         self.insert_ts = data.get('insert_ts')

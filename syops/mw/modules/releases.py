@@ -1,5 +1,7 @@
+import os
 import logging
 import json
+import tempfile
 import subprocess
 import boto.sqs
 from httplib2 import Http
@@ -7,9 +9,19 @@ from urllib import urlencode
 from boto.sqs.message import Message
 
 from syops.mw.modules import Abstract
+from syops.lib.models.user import User
+from syops.lib.models.team import Team
 from syops.lib.models.app import App
+from syops.lib.models.release import Release
+
+STATUS_PENDING_QA = 1
+STATUS_FAILED = 2
+STATUS_IN_QA = 3
+STATUS_PENDING_PROD = 4
+STATUS_IN_PROD = 5
 
 class Releases(Abstract):
+
     def init(self):
         from syops.lib.application import Application
         self.sqs = boto.sqs.connect_to_region(
@@ -21,48 +33,78 @@ class Releases(Abstract):
     def loop(self):
         messages = self.queue.get_messages(1)
         for message in messages:
-            payload = message.get_body()
+            payload = json.loads(message.get_body())
             logging.info('Release info recieved: %s' % payload)
-            self.create(json.loads(payload))
-            #self.queue.delete_message(message)
 
-    def create(self, params={}):
-        environment = params.get('environment')
-        version = params.get('version')
-        app_id = params.get('app_id')
-        branch = params.get('branch')
-        description = params.get('description')
+            # Grab release id
+            release_id = payload.get('release_id')
+            if not release_id:
+                logging.warning('No release id found!')
 
-        # Build app object
-        app = App(app_id)
-        if not app.id:
-            logging.error('No app id found!')
+            # Ensure there is work to be done
+            release = Release(release_id)
+            if release.release_status_id != STATUS_PENDING_QA and \
+               release.release_status_id != STATUS_PENDING_PROD:
+               logging.warning('Nothing to do')
+               continue
+
+            # Build package and place in QA
+            if release.release_status_id == STATUS_PENDING_QA:
+                self.build(release)
+                continue;
+
+            # Copy package to prod
+            if release.release_status_id == STATUS_PENDING_PROD:
+                self.copy_to_prod(release)
+
+    def build(self, release):
+        app = App(release.app_id)
+        team = Team(app.team_id)
+        user = User(team.user_id)
+
+        # Ensure build instructions present
+        logging.info('Building %s v%s...' % (app.name, release.version))
+        if not app.build_instructions:
+            logging.warning('No build instructions found!')
             return
 
-        # Tag in GitHub
-        api_url = 'https://api.github.com'
-        url = '%s/repos/%s/%s/releases' % (api_url, app.github_owner, app.github_repo)
-        params = {
-            'tag_name': 'v%s' % version,
-            'target_commitish': branch,
-            'name': 'v%s' % version,
-            'body': description,
-            'prerelease': True
-        }
-        headers, content = Http().request(url, 'POST', urlencode(params))
-        print url
-        print headers
-        print content
+        # Make clean dir to build in
+        build_dir = '/tmp/syops/%s_%s' % (app.name, release.version)
+        cmd = 'mkdir -p /tmp/syops && git clone https://%s@%s -b %s %s' % (
+            user.access_token,
+            app.clone_url.replace('https://', ''),
+            release.tagged_branch,
+            build_dir
+        )
+        child = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=True)
+        output, errors = child.communicate()
+        return_code = child.returncode
 
-    def build(self, app):
-        # Run build instructions
-        if app.build_instructions:
-            child = subprocess.Popen(
-                app.build_instructions,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                shell=True)
-            output, errors = child.communicate()
-            return_code = child.returncode
+        # Replace magic variables
+        build_inst = app.build_instructions.replace('__DIR__', build_dir)
+        build_inst = build_inst.replace('__APPNAME__', app.name)
+        build_inst = build_inst.replace('__VERSION__', release.version)
+        build_inst = build_inst.replace('\r', '')
 
-            print output, return_code
+        # Write to temp file
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(build_inst)
+
+        # Run build script
+        child = subprocess.Popen(
+            'chmod +x %s && %s' % (f.name, f.name),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=True,
+            executable='/bin/bash')
+        output, errors = child.communicate()
+        return_code = child.returncode
+
+        # Clean up
+        os.unlink(f.name)
+
+        print output, errors, return_code

@@ -55,7 +55,7 @@ class Release(Abstract):
 
         # Build message payload
         payload = {
-            'release_id': self.app_id,
+            'release_id': row[0]
         }
 
         # Add to queue
