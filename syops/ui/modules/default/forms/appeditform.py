@@ -19,16 +19,22 @@ class AppEditForm(FormAbstract):
         self.add_element(url)
 
         # Github owner
-        url = Input(name='github_owner', type='input')
-        url.add_attribute('class', 'form-control')
-        url.add_attribute('id', 'app-owner')
-        self.add_element(url)
+        owner = Input(name='github_owner', type='input')
+        owner.add_attribute('class', 'form-control')
+        owner.add_attribute('id', 'app-owner')
+        self.add_element(owner)
 
         # Github repo
-        url = Input(name='github_repo', type='input')
-        url.add_attribute('class', 'form-control')
-        url.add_attribute('id', 'app-repo')
-        self.add_element(url)
+        repo = Input(name='github_repo', type='input')
+        repo.add_attribute('class', 'form-control')
+        repo.add_attribute('id', 'app-repo')
+        self.add_element(repo)
+
+        # Docs URL
+        docs = Input(name='doc_url', type='input')
+        docs.add_attribute('class', 'form-control')
+        docs.add_attribute('id', 'app-docs')
+        self.add_element(docs)
 
         # Build instructions
         build = Textarea(name='build_instructions')

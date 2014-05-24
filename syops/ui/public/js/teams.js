@@ -33,8 +33,8 @@ Syops.prototype.modules.teams = function (base) {
                 github_owner: repo.data('owner'),
                 github_repo: repo.data('name'),
             },
-            success: function (response) {
-                location.reload();
+            success: function (app) {
+                window.location.href='/app/edit?id='+app.id
             },
             error: function () {
                 base.alert('Error saving applicaiton.', 'danger');
@@ -84,7 +84,10 @@ Syops.prototype.modules.teams = function (base) {
                             '<a href="#" class="list-group-item"' +
                                 'data-name="'+repo.name+'" '+
                                 'data-owner="'+repo.owner.login+'" '+
-                                'data-clone_url="'+repo.ssh_url+'"> '+
+                                /**
+                                 *
+                                 */
+                                'data-clone_url="'+repo.clone_url+'"> '+
                                 '<div class="row">'+
                                     '<div class="col-md-1">'+
                                         '<i class="mega-octicon octicon-repo"></i>'+

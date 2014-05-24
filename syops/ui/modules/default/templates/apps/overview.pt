@@ -12,8 +12,13 @@
             <div class="page-title">${app.name}</div>
             <div id="alert"></div>
             <button class="btn btn-success pull-right" id="new-release-btn">
+                <i class="octicon octicon-tag"></i>
                 New Release
             </button>
+            <a href="/app/edit?id=${app.id}" class="btn btn-default pull-right">
+                <i class="octicon octicon-tools"></i>
+                Edit Application
+            </a>
         </div>
 
         <div class="content-wrapper"
@@ -39,13 +44,21 @@
                </div>
                <div class="metric">
                    <div class="field">Last build status</div>
-                   <div class="data">Success!</div>
-                   <div class="subtext">From develop on 17 hours ago</div>
+                   <div class="data">
+                       ${python: latest_release.status if latest_release else 'N/A'}
+                    </div>
+                   <div class="subtext" tal:condition="python: latest_release">
+                       From ${latest_release.tagged_branch} 
+                       on ${latest_release.update_ts.strftime('%Y-%m-%d %H:%M')}
+                   </div>
                </div>
                <div class="metric">
                    <div class="field"></div>
                    <div class="data">
-                       <a href="https://github.com/aosyborg/syops/wiki">
+                       <span tal:condition="python: not app.doc_url">
+                           No Documentation!
+                       </span>
+                       <a href="${app.doc_url}" tal:condition="python: app.doc_url">
                            Documentation
                        </a>
                    </div>
@@ -65,13 +78,18 @@
                     <th>Actions</th>
                 </tr>
                 <tr tal:repeat="release releases" id="release-${release.id}">
-                    <td>${release.id}</td>
-                    <td>${release.status}</td>
-                    <td>${release.version}</td>
-                    <td>${release.tagged_branch}</td>
-                    <td>${release.description}</td>
-                    <td>${release.update_ts}</td>
-                    <td>&nbsp;</td>
+                    <td class="release-id">${release.id}</td>
+                    <td class="release-status">${release.status}</td>
+                    <td class="release-version">${release.version}</td>
+                    <td class="release-branch">${release.tagged_branch}</td>
+                    <td class="release-desc">${release.description}</td>
+                    <td class="release-time">${release.update_ts.strftime('%Y-%m-%d %H:%M')}</td>
+                    <td class="release-actions">
+                        <button tal:condition="python: release.release_status_id == 3"
+                            class="btn btn-success release-to-prod">
+                            release to prod
+                        </button>
+                    </td>
                 </tr>
             </table>
 
@@ -93,8 +111,8 @@
                                     ${structure:release_form.get_element('version')}
                                 </div>
                                 <div class="form-group">
-                                    <label for="release-branch">Branch</label>
-                                    ${structure:release_form.get_element('branch')}
+                                    <label for="tagged-branch">Branch</label>
+                                    ${structure:release_form.get_element('tagged_branch')}
                                 </div>
                                 <div class="form-group">
                                     <label for="release-description">Description</label>

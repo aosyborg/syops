@@ -5,15 +5,15 @@ import glob
 import boto.sqs
 
 from syops.lib.models import Abstract
+from syops.lib.models.app import App
 from syops.lib.application import Application
 
 class Debs(Abstract):
 
-    def __init__(self):
-        pass
+    def __init__(self, app):
+        self.app = App(app) if app.isdigit() else app
 
-    @staticmethod
-    def get_latest_pkg(env='prod'):
+    def get_latest_pkg(self, env='prod'):
         released = ''
         major = 0
         minor = 0
@@ -26,9 +26,9 @@ class Debs(Abstract):
         else:
             raise Exception('Unknown env')
 
-        packages = glob.glob('%s/syops_*.deb' % path)
+        packages = glob.glob('%s/%s_*.deb' % (path, self.app.name))
         for package in packages:
-            matches = re.search(r'syops_(\d+)\.(\d+)\-(\d+).deb', package)
+            matches = re.search(r'_(\d+)\.(\d+)\-(\d+).deb', package)
             if not matches:
                 continue
 

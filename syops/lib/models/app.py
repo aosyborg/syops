@@ -24,6 +24,7 @@ class App(Abstract):
         self.clone_url = data.get('clone_url')
         self.github_owner = data.get('github_owner')
         self.github_repo = data.get('github_repo')
+        self.doc_url = data.get('doc_url')
         self.build_instructions = data.get('build_instructions')
         self.insert_ts = data.get('insert_ts')
 
@@ -40,11 +41,15 @@ class App(Abstract):
         return rows if rows else []
 
     def save(self):
+        if not self.id and not self.doc_url:
+            self.doc_url = 'https://github.com/%s/%s/wiki' % (
+                self.github_owner, self.github_repo)
         db_cursor = self.data_manager.get_db_cursor()
         db_cursor.execute('''
             SELECT * FROM set_app(%(id)s::BIGINT, %(team_id)s::BIGINT,
                 %(name)s::VARCHAR, %(clone_url)s::VARCHAR, %(github_owner)s::VARCHAR,
-                %(github_repo)s::VARCHAR, %(build_instructions)s::TEXT)
+                %(github_repo)s::VARCHAR, %(doc_url)s::VARCHAR,
+                %(build_instructions)s::TEXT)
         ''', {
             'id': self.id,
             'team_id': self.team_id,
@@ -52,6 +57,7 @@ class App(Abstract):
             'clone_url': self.clone_url,
             'github_owner': self.github_owner,
             'github_repo': self.github_repo,
+            'doc_url': self.doc_url,
             'build_instructions': self.build_instructions,
         })
         row = db_cursor.fetchone()

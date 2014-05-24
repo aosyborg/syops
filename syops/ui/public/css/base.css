@@ -182,7 +182,7 @@ body {
 #alert {
     display: inline-block;
     padding: 15px;
-    width: 775px;
+    width: 50%;
 }
 
 /** Octicons **/
@@ -196,11 +196,17 @@ body {
     font: 32px/1 octicons;
     text-decoration: none;
 }
+.octicon-organization:before {
+    content: "\f037";
+}
 .octicon-repo:before {
     content: "\f001";
 }
-.octicon-organization:before {
-    content: "\f037";
+.octicon-tag:before {
+    content: "\f015";
+}
+.octicon-tools:before {
+    content: "\f031";
 }
 .octicon-signout:before {
     content: "\f032";

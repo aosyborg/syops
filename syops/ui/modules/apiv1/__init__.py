@@ -24,6 +24,11 @@ def add_routes(config):
                     route_name='apiv1:app:new_release',
                     attr='new_release',
                     renderer='json')
+    config.add_route('apiv1:app:release', '/v1/app/release')
+    config.add_view(App,
+                    route_name='apiv1:app:release',
+                    attr='release',
+                    renderer='json')
 
     # Team
     config.add_route('apiv1:team:edit', '/v1/team/edit')

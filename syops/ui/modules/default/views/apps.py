@@ -10,16 +10,18 @@ class Apps(Abstract):
 
     def overview(self):
         app_id = self.request.params.get('id')
+        debs = Debs(app_id)
 
         return self.render(
             'syops.ui:modules/default/templates/apps/overview.pt', {
             'page_title': 'Application Overview',
             'team_apps': Team.get_team_apps(self.session['user'].id),
             'app': App(app_id),
-            'prod': Debs.get_latest_pkg(env='prod'),
-            'qa': Debs.get_latest_pkg(env='qa'),
+            'prod': debs.get_latest_pkg(env='prod'),
+            'qa': debs.get_latest_pkg(env='qa'),
             'release_form': ReleaseForm(self.request),
-            'releases': Release.get_list(app_id)
+            'releases': Release.get_list(app_id),
+            'latest_release': Release.get_latest(app_id)
             }, request=self.request)
 
     def edit(self):

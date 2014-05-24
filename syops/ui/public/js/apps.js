@@ -32,7 +32,7 @@ Syops.prototype.modules.apps = function (base) {
                 $.each(branches, function (index, branch) {
                     html += '<option name="'+branch.name+'">'+branch.name+'</option>';
                 });
-                $('#release-branch').html(html);
+                $('#tagged-branch').html(html);
             }
         });
     }
@@ -41,12 +41,13 @@ Syops.prototype.modules.apps = function (base) {
      * Creates a new release
      */
     methods.create_release = function (form) {
+        var app_id = $('.content-wrapper').data('app-id');
         $.ajax({
             url: '/v1/app/new_release',
             type: 'post',
             data: form.serialize(),
             success: function (response) {
-                console.log(response)
+                window.location = "/apps?id=" + app_id;
             },
             error: function () {
                 base.alert('Error creating release.', 'danger');
@@ -80,6 +81,25 @@ Syops.prototype.modules.apps = function (base) {
     };
 
     /**
+     * Releases an application to production
+     */
+    methods.release_app = function (release_id) {
+        $.ajax({
+            url: '/v1/app/release',
+            type: 'post',
+            data: {release_id: release_id},
+            success: function (response) {
+                location.reload();
+            },
+            error: function () {
+                base.alert('Error releasing application.', 'danger');
+            },
+            complete: function () {
+            },
+        });
+    };
+
+    /**
      * Listeners
      */
     listeners.releases = function () {
@@ -93,6 +113,19 @@ Syops.prototype.modules.apps = function (base) {
         // Create a release
         $('#edit-release-save').on('click', function(event) {
             methods.create_release($(this).closest('.modal-content').find('form'));
+        });
+        // Release to prod
+        $('.release-to-prod').on('click', function (event) {
+            var row = $(this).closest('tr'),
+                id = row.find('.release-id').text(),
+                version = row.find('.release-version').text();
+            base.confirm({
+                title: 'Release to production',
+                body: 'Are you sure you want to release '+
+                      '<strong>v' + version + '</strong> to production?',
+                primary_label: 'Release',
+                primary_callback: $.proxy(methods.release_app, self, id)
+            });
         });
     };
     listeners.edit = function () {

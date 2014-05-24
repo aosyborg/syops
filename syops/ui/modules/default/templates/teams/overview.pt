@@ -29,11 +29,11 @@
                     <td class="app-id">${app.id}</td>
                     <td class="app-name">${app.name}</td>
                     <td class="app-clone-url">${app.clone_url}</td>
-                    <td class="app-created">${app.insert_ts}</td>
+                    <td class="app-created">${app.insert_ts.strftime('%Y-%m-%d %H:%M')}</td>
                     <td>
                         <a href="#" class="app-delete"><i class="glyphicon glyphicon-trash"></i></a>
                         <a href="/app/edit?id=${app.id}" class="app-edit">
-                            <i class="glyphicon glyphicon-wrench"></i>
+                            <i class="octicon octicon-tools"></i>
                         </a>
                     </td>
                 </tr>

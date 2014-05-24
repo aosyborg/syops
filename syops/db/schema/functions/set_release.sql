@@ -42,7 +42,7 @@ $_$
             );
             v_id := CURRVAL('public.releases_id_seq');
         ELSE
-            UPDATE apps SET
+            UPDATE releases SET
                 app_id = COALESCE(i_app_id, app_id),
                 release_status_id = COALESCE(i_release_status_id, release_status_id),
                 version = COALESCE(i_version, version),

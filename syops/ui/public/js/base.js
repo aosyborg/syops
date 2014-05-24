@@ -34,7 +34,7 @@ var Syops = function () {
             .find('.modal-title')
                 .text(options.title).end()
             .find('.modal-body')
-                .text(options.body).end()
+                .html(options.body).end()
             .find('.modal-footer .btn-default')
                 .text(options.secondary_label)
                 .off('click')

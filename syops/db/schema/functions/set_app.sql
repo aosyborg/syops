@@ -5,6 +5,7 @@ DROP FUNCTION IF EXISTS set_app (
     i_clone_url             VARCHAR(255),
     i_github_owner          VARCHAR(255),
     i_github_repo           VARCHAR(255),
+    i_doc_url               VARCHAR(255),
     i_build_instructions    TEXT
 );
 CREATE OR REPLACE FUNCTION set_app (
@@ -14,6 +15,7 @@ CREATE OR REPLACE FUNCTION set_app (
     i_clone_url             VARCHAR(255),
     i_github_owner          VARCHAR(255),
     i_github_repo           VARCHAR(255),
+    i_doc_url               VARCHAR(255),
     i_build_instructions    TEXT
 )
 RETURNS BIGINT
@@ -31,6 +33,7 @@ $_$
                 clone_url,
                 github_owner,
                 github_repo,
+                doc_url,
                 build_instructions
             ) VALUES (
                 i_team_id,
@@ -38,6 +41,7 @@ $_$
                 i_clone_url,
                 i_github_owner,
                 i_github_repo,
+                i_doc_url,
                 i_build_instructions
             );
             v_id := CURRVAL('public.apps_id_seq');
@@ -48,6 +52,7 @@ $_$
                 clone_url = COALESCE(i_clone_url, clone_url),
                 github_owner = COALESCE(i_github_owner, github_owner),
                 github_repo = COALESCE(i_github_repo, github_repo),
+                doc_url = COALESCE(i_doc_url, doc_url),
                 build_instructions = COALESCE(i_build_instructions, build_instructions)
             WHERE
                 id = i_app_id;

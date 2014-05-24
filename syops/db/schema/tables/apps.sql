@@ -6,6 +6,7 @@ CREATE TABLE public.apps (
     clone_url VARCHAR(255) NOT NULL,
     github_owner VARCHAR(255) NOT NULL,
     github_repo VARCHAR(255) NOT NULL,
+    doc_url VARCHAR(255),
     build_instructions TEXT,
     insert_ts TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

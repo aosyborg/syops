@@ -12,9 +12,9 @@ class ReleaseForm(FormAbstract):
         self.add_element(version)
 
         # Branch (javascript will populate this)
-        branch = Select(name='branch')
+        branch = Select(name='tagged_branch')
         branch.add_attribute('class', 'form-control')
-        branch.add_attribute('id', 'release-branch')
+        branch.add_attribute('id', 'tagged-branch')
         self.add_element(branch)
 
         # Description

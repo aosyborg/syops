@@ -1,3 +1,4 @@
+import ast
 import logging
 from ConfigParser import ConfigParser
 
@@ -49,3 +50,4 @@ class Application(object):
         Application.OAUTH_GITHUB_CLIENT_ID = parser.get('oauth', 'github.client_id')
         Application.OAUTH_GITHUB_CLIENT_SECRET = parser.get('oauth', 'github.client_secret')
         Application.OAUTH_GITHUB_URL = parser.get('oauth', 'github.url')
+

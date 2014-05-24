@@ -38,3 +38,9 @@ class App(Abstract):
 
         release = Release(data=self.request.params)
         return release.save()
+
+    def release(self):
+        release_id = self.request.params.get('release_id')
+        release = Release(release_id)
+        release.release_status_id += 1
+        return release.save()
