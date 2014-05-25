@@ -9,12 +9,9 @@ class Github(object):
     BASE_URL = 'api.github.com'
 
     @staticmethod
-    def post(path, params={}, access_token=None):
-        if access_token:
-            params['access_token'] = access_token
-
-        url = '%s://%s%s' % (Github.PROTOCAL, Github.BASE_URL, path)
-        headers, content = Http().request(url, 'POST', urlencode(params))
+    def post(path, params={}, access_token=''):
+        url = '%s://%s%s?access_token=%s' % (Github.PROTOCAL, Github.BASE_URL, path, access_token)
+        headers, content = Http('.cache').request(url, 'POST', body=json.dumps(params))
         return json.loads(content)
 
     @staticmethod

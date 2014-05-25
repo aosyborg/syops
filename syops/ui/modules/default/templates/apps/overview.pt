@@ -1,5 +1,5 @@
-<tal tal:define="global sidebar_active string:app-${app.id}">
-<metal:main use-macro="load: ../layouts/user.pt">
+<metal:main use-macro="load: ../layouts/user.pt"
+    tal:define="global sidebar_active string:app-${app.id}">
     <metal:slot fill-slot="head">
         <link rel="stylesheet" type="text/css" href="/public/css/apps.css" />
     </metal:slot>
@@ -94,7 +94,7 @@
             </table>
 
             <!-- App edit modal -->
-            <div class="modal fade" id="edit-release" roll="dialog">
+            <div class="modal fade in" id="edit-release" roll="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -132,4 +132,3 @@
         </div>
     </div>
 </metal:main>
-</tal>

@@ -8,7 +8,12 @@ body {
     background: none repeat scroll 0 0 #F2F5F8;
     font-family: "Open Sans",Arial,Helvetica,Sans-Serif;
 }
-
+.modal.fade {
+    transition: all 0.1s ease-out 0s;
+}
+.modal.fade.in {
+    opacity: 1;
+}
 .no-padding {
     padding: 0;
 }
@@ -25,9 +30,10 @@ body {
     margin: 10px auto;
     width: 128px;
 }
-#wapper {
+#wrapper {
     position: relative;
     margin: 0 auto;
+    min-height: 900px;
 }
 #sidebar {
     background: none repeat scroll 0 0 #2A313A;

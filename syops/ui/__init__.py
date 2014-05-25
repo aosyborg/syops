@@ -1,8 +1,10 @@
 from pyramid.config import Configurator
+from pyramid.events import NewRequest
 import pyramid_beaker
 
 from syops.ui.modules.default import add_routes as add_default_routes
 from syops.ui.modules.apiv1 import add_routes as add_apiv1_routes
+from syops.ui.plugins import Acl
 
 def main(global_config, **settings):
     """
@@ -25,5 +27,8 @@ def main(global_config, **settings):
     # Add modules
     add_default_routes(config)
     add_apiv1_routes(config)
+
+    # Add plugins
+    config.add_subscriber(Acl(), NewRequest)
 
     return config.make_wsgi_app()

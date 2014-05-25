@@ -1,4 +1,5 @@
 import os
+import shutil
 import logging
 import json
 import tempfile
@@ -9,10 +10,12 @@ from urllib import urlencode
 from boto.sqs.message import Message
 
 from syops.mw.modules import Abstract
+from syops.lib.application import Application
 from syops.lib.models.user import User
 from syops.lib.models.team import Team
 from syops.lib.models.app import App
 from syops.lib.models.release import Release
+from syops.lib.models.github import Github
 
 STATUS_PENDING_QA = 1
 STATUS_FAILED = 2
@@ -34,6 +37,7 @@ class Releases(Abstract):
         messages = self.queue.get_messages(1)
         for message in messages:
             payload = json.loads(message.get_body())
+            self.queue.delete_message(message)
             logging.info('Release info recieved: %s' % payload)
 
             # Grab release id
@@ -45,8 +49,8 @@ class Releases(Abstract):
             release = Release(release_id)
             if release.release_status_id != STATUS_PENDING_QA and \
                release.release_status_id != STATUS_PENDING_PROD:
-               logging.warning('Nothing to do')
-               continue
+                logging.warning('Nothing to do')
+                continue
 
             # Build package and place in QA
             if release.release_status_id == STATUS_PENDING_QA:
@@ -104,7 +108,42 @@ class Releases(Abstract):
         output, errors = child.communicate()
         return_code = child.returncode
 
-        # Clean up
-        os.unlink(f.name)
+        # Failed build (update status)
+        if return_code != 0:
+            logging.warning('Build failed! See output for details')
+            release.release_status_id = STATUS_FAILED
 
-        print output, errors, return_code
+        # Good build (update status, move deb, create github release)
+        else:
+            logging.info('Build succeeded!')
+            release.release_status_id = STATUS_IN_QA
+            shutil.move('%s/build/%s_%s.deb' % (
+                build_dir,
+                app.name,
+                release.version), Application.QA_PKG_DIR)
+            Github.post('/repos/%s/%s/releases' % (app.github_owner, app.github_repo),
+                params = {
+                    'tag_name': 'v%s' % release.version,
+                    'name': 'v%s' % release.version,
+                    'target_commitish': release.tagged_branch,
+                    'body': release.description
+                }, access_token = user.access_token)
+
+        # Clean up
+        shutil.rmtree(build_dir)
+
+        # Save
+        release.build_output = 'Stdout:\n %s\n\n Stderr:\n%s' % (output, errors)
+        release.save()
+
+    def copy_to_prod(self, release):
+        app = App(release.app_id)
+
+        # Copy deb from qa to prod
+        logging.info('Copying to prod %s v%s...' % (app.name, release.version))
+        deb_path = '%s/%s_%s.deb' % (Application.QA_PKG_DIR, app.name, release.version)
+        shutil.copy(deb_path, Application.PROD_PKG_DIR)
+
+        # Update release status
+        release.release_status_id = STATUS_IN_PROD
+        release.save()

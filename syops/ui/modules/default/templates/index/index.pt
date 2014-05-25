@@ -1,5 +1,5 @@
-<tal tal:define="global sidebar_active string:dashboard">
-<metal:main use-macro="load: ../layouts/user.pt">
+<metal:main use-macro="load: ../layouts/user.pt"
+      tal:define="global sidebar_active string:dashboard">
     <metal:slot fill-slot="head">
         <link rel="stylesheet" type="text/css" href="/public/css/index.css" />
     </metal:slot>
@@ -7,4 +7,3 @@
     <div metal:fill-slot="content" class="content">
     </div>
 </metal:main>
-</tal>
