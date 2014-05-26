@@ -18,8 +18,8 @@
 
             <h3>Repositories</h3>
             <p>Add one of these repositories to your /etc/apt/sources.list file</p>
-            <strong>QA:</strong> deb https://syops.aospace.com/repos/qa stable contrib<br>
-            <strong>Prod:</strong> deb https://syops.aospace.com/repos/prod stable contrib<br>
+            <strong>QA:</strong> deb https://syops.aospace.com/public/repos/qa ./<br>
+            <strong>Prod:</strong> deb https://syops.aospace.com/public/repos/prod ./<br>
 
             <h3>Automation</h3>
         </div>

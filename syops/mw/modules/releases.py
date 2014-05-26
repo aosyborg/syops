@@ -121,6 +121,7 @@ class Releases(Abstract):
                 build_dir,
                 app.name,
                 release.version), Application.QA_PKG_DIR)
+            self.rebuild_packages(Application.QA_PKG_DIR)
             Github.post('/repos/%s/%s/releases' % (app.github_owner, app.github_repo),
                 params = {
                     'tag_name': 'v%s' % release.version,
@@ -143,7 +144,18 @@ class Releases(Abstract):
         logging.info('Copying to prod %s v%s...' % (app.name, release.version))
         deb_path = '%s/%s_%s.deb' % (Application.QA_PKG_DIR, app.name, release.version)
         shutil.copy(deb_path, Application.PROD_PKG_DIR)
+        self.rebuild_packages(Application.PROD_PKG_DIR)
 
         # Update release status
         release.release_status_id = STATUS_IN_PROD
         release.save()
+
+    def rebuild_packages(self, pkg_dir):
+        child = subprocess.Popen(
+            'dpkg-scanpackages %s /dev/null | gzip -9c > %s/Packages.gz' % (
+                pkg_dir, pkg_dir),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=True,
+            executable='/bin/bash')
+        output, errors = child.communicate()
