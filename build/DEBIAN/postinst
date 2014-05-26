@@ -4,6 +4,10 @@
 
 case "$1" in
     configure)
+        virtualenv /opt/syops/env --no-site-packages
+        cd /opt/syops
+        env/bin/python /opt/syops/setup.py develop
+
         chmod +x /etc/init.d/syops
         /etc/init.d/syops restart
         /etc/init.d/apache2 restart

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='syops',
-    version='0.0.1-1',
+    version='VERSION',
     description='DevOps made easy with github and aws',
     long_description='DevOps made easy with github and aws',
     author='Dave Symons',

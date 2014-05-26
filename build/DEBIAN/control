@@ -2,7 +2,8 @@ Package: syops
 Version: VERSION
 Section: base
 Priority: optional
-Architecture: i386
+Architecture: amd64
 Maintainer: Dave Symons <symons@aospace.com>
 Description: SyOps
  Automates build and packaging from GitHub
+Depends: libapache2-mod-wsgi
