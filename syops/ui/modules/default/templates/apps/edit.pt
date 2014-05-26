@@ -44,7 +44,20 @@
                     ${structure:app_form.get_element('doc_url')}
                 </div>
                 <div class="form-group">
-                    <label for="app-build_instructions">Build Instructions</label>
+                    <label for="app-build_instructions">
+                        Build Instructions
+                        <i class="octicon octicon-question" rel="popover"></i>
+                        <div class="popover hide">
+                            Repos are cloned and built in /tmp - because of this some
+                            helpful substituions are made to aid your build
+                            instructions.
+                            <ul>
+                                <li>__DIR__ is replaced with project directory root</li>
+                                <li>__APPNAME__ is replaced with the app name</li>
+                                <li>__VERSION__ is replaced with the version</li>
+                            </ul>
+                        </div>
+                    </label>
                     ${structure:app_form.get_element('build_instructions')}
                 </div>
             </form>

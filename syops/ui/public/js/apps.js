@@ -129,6 +129,14 @@ Syops.prototype.modules.apps = function (base) {
         });
     };
     listeners.edit = function () {
+        // Build instructions popover
+        $('i.octicon-question').popover({
+            html: true,
+            content: function () {
+                var html = $(this).siblings('.popover').html();
+                return html;
+            }
+        });
         // Save edits
         $('#save-edit-btn').on('click', function (event) {
             methods.save_edit($('.content-wrapper form'));

@@ -1,9 +1,27 @@
 <metal:main use-macro="load: ../layouts/user.pt"
-      tal:define="global sidebar_active string:dashboard">
+    tal:define="global sidebar_active string:dashboard">
     <metal:slot fill-slot="head">
         <link rel="stylesheet" type="text/css" href="/public/css/index.css" />
     </metal:slot>
 
-    <div metal:fill-slot="content" class="content">
+    <div metal:fill-slot="content" id="content">
+        <div class="content-wrapper">
+            <h2>Getting started</h2>
+            <p>
+                SyOps integrates with GitHub to pull down a specific repository branch
+                and run a predefined build script. Assuming this succeeds, SyOps will
+                create a release in GitHub and place the created Debian package in its
+                own QA or Production repositories. When done correctly, this allows for
+                push button deployment of code.
+            </p>
+            <p>To start, add one of your repositories!</p>
+
+            <h3>Repositories</h3>
+            <p>Add one of these repositories to your /etc/apt/sources.list file</p>
+            <strong>QA:</strong> deb https://syops.aospace.com/repos/qa stable contrib<br>
+            <strong>Prod:</strong> deb https://syops.aospace.com/repos/prod stable contrib<br>
+
+            <h3>Automation</h3>
+        </div>
     </div>
 </metal:main>

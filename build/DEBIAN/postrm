@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Postrm script for syops
+
+
+case "$1" in
+    purge|remove)
+        /etc/init.d/apache2 restart
+    ;;
+
+    remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        exit 0
+    ;;
+
+    *)
+        echo "postrm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+
+esac
+
+exit 0
+
+

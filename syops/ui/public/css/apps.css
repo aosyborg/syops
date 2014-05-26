@@ -29,3 +29,9 @@
     font-size: 14px;
     margin-bottom: 9px;
 }
+i.octicon-question {
+    cursor: pointer;
+}
+.popover {
+    max-width: 400px;
+}

@@ -162,6 +162,7 @@ body {
     background: none repeat scroll 0 0 #FFFFFF;
     margin-left: 230px;
     padding: 0;
+    overflow: auto;
 }
 #content .menubar {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -204,6 +205,9 @@ body {
 }
 .octicon-organization:before {
     content: "\f037";
+}
+.octicon-question:before {
+    content: "\f02c";
 }
 .octicon-repo:before {
     content: "\f001";
