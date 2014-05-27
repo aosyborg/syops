@@ -23,67 +23,58 @@ class User(Abstract):
         self.id = data.get('id')
         self.name = data.get('name')
         self.email = data.get('email')
-        self.password = data.get('password')
         self.access_token = data.get('access_token')
         self.avatar_url = data.get('avatar_url')
-        self.is_admin = data.get('is_admin')
+        self.is_verified = data.get('is_verified', False)
+        self.is_admin = data.get('is_admin', False)
         self.insert_ts = data.get('insert_ts')
+
+    @staticmethod
+    def build_from_email(email):
+        db_cursor = User.data_manager.get_db_cursor()
+        db_cursor.execute("""
+            SELECT id FROM users WHERE email = %(email)s::VARCHAR LIMIT 1
+        """, {'email': email})
+        row = db_cursor.fetchone()
+        return User(row['id']) if row else False
 
     @staticmethod
     def build_from_access_token(access_token):
         user_info = Github.get('/user', access_token=access_token)
         if not user_info:
-            return None
+            return False
 
         # Attempt to query for user based on email
         db_cursor = User.data_manager.get_db_cursor()
         db_cursor.execute("""
-            SELECT id FROM users where email = %(email)s::VARCHAR
+            SELECT id FROM users WHERE email = %(email)s::VARCHAR AND is_verified = True
         """, {'email': user_info.get('email')})
         row = db_cursor.fetchone()
 
-        # Instantiate user and set access token
-        user = User(row['id']) if row else User(data=user_info)
-        user.access_token = access_token
-        user.avatar_url = user_info.get('avatar_url')
-        return user.save()
-
-    @staticmethod
-    def login(email, password):
-        db_cursor = User.data_manager.get_db_cursor()
-        password_hash = sha1('%s%s' % (Application.SALT, password)).hexdigest()
-        db_cursor.execute("""
-            SELECT id
-            FROM users
-            WHERE email = %(email)s::VARCHAR
-            AND password = %(password)s::VARCHAR
-            LIMIT 1
-        """, {
-            'email': email,
-            'password': password_hash
-        })
-        row = db_cursor.fetchone()
-
-        # Sanity check: if no user found simply return False
+        # If not verified (registered) user, they shall not pass
         if not row:
             return False
 
-        # If a user was found build and return that object
-        return User(row['id'])
+        # Instantiate user and set access token
+        user = User(row['id'])
+        user.name = user_info.get('name')
+        user.avatar_url = user_info.get('avatar_url')
+        user.access_token = access_token
+        return user.save()
 
     def save(self):
         db_cursor = self.data_manager.get_db_cursor()
         db_cursor.execute('''
             SELECT * FROM set_user(%(id)s::BIGINT, %(email)s::VARCHAR,
-                %(password)s::VARCHAR, %(name)s::VARCHAR, %(access_token)s::VARCHAR,
-                %(avatar_url)s::VARCHAR, %(is_admin)s::BOOLEAN)
+                %(name)s::VARCHAR, %(access_token)s::VARCHAR, %(avatar_url)s::VARCHAR,
+                %(is_verified)s::BOOLEAN, %(is_admin)s::BOOLEAN)
         ''', {
             'id': self.id,
             'email': self.email,
-            'password': self.password,
             'name': self.name,
             'access_token': self.access_token,
             'avatar_url': self.avatar_url,
+            'is_verified': self.is_verified,
             'is_admin': self.is_admin
         })
         row = db_cursor.fetchone()

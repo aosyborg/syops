@@ -1,0 +1,30 @@
+<metal:main use-macro="load: ../layouts/default.pt">
+    <metal:slot fill-slot="head">
+        <link rel="stylesheet" type="text/css" href="/public/css/invite.css" />
+    </metal:slot>
+
+    <div metal:fill-slot="content" class="container">
+        <h1>Request an invite</h1>
+
+        <form method="post" action="/invite/request">
+
+            <div class="form-group">
+                <div tal:condition="python: error" class="alert alert-danger">
+                    There is already a user registered with that email!
+                </div>
+
+                <input type="email"
+                       id="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="Enter email">
+            </div>
+
+            <div id="disclaimer" class="pull-left">
+                ** Understand that unless I know you personally, this isn't going to happen.
+            </div>
+
+            <input type="submit" class="btn btn-primary btn-lg pull-right" value="Make request">
+        </form>
+    </div>
+</metal:main>

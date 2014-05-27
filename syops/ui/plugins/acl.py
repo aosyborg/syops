@@ -3,6 +3,7 @@ import pyramid
 class Acl(object):
     public_paths = [
         'login',
+        'invite',
         'public',
         'oauth'
     ]

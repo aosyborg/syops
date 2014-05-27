@@ -32,9 +32,12 @@ class Debs(Abstract):
             if not matches:
                 continue
 
-            if matches.group(1) >= major and \
-                matches.group(2) >= minor and \
-                matches.group(3) >= revision:
+            # Convert versions to int so its easier to compare
+            package_version = (int(matches.group(1)) * 100) + \
+                               (int(matches.group(2)) * 10) + \
+                                int(matches.group(3))
+            latest_version = (int(major) * 100) + (int(minor) * 10) + int(revision)
+            if package_version > latest_version:
                 major = matches.group(1)
                 minor = matches.group(2)
                 revision = matches.group(3)

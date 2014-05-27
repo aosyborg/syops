@@ -69,7 +69,7 @@
             <!-- Release list -->
             <table class="table">
                 <tr>
-                    <th>Id</th>
+                    <th>Console</th>
                     <th>Status</th>
                     <th>Version</th>
                     <th>Tagged Branch</th>
@@ -78,20 +78,42 @@
                     <th>Actions</th>
                 </tr>
                 <tr tal:repeat="release releases" id="release-${release.id}">
-                    <td class="release-id">${release.id}</td>
-                    <td class="release-status">${release.status}</td>
+                    <td class="release-console">
+                        <i class="glyphicon glyphicon-tasks"
+                           data-release-id="${release.id}"></i>
+                    </td>
+                    <td class="release-status">${release.status}
+                    </td>
                     <td class="release-version">${release.version}</td>
                     <td class="release-branch">${release.tagged_branch}</td>
                     <td class="release-desc">${release.description}</td>
                     <td class="release-time">${release.update_ts.strftime('%Y-%m-%d %H:%M')}</td>
                     <td class="release-actions">
                         <button tal:condition="python: release.release_status_id == 3"
-                            class="btn btn-success release-to-prod">
-                            release to prod
+                            class="btn btn-default release-to-prod">
+                            <i class="glyphicon glyphicon-cloud-upload"></i>
+                            Release to prod
                         </button>
                     </td>
                 </tr>
             </table>
+
+            <!-- Build output modal -->
+            <div class="modal fade in" id="build-output" roll="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Build console</h4>
+                        </div>
+                        <div class="modal-body">
+                            <pre>
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- App edit modal -->
             <div class="modal fade in" id="edit-release" roll="dialog">
@@ -107,7 +129,13 @@
                                 <input type="hidden" name="app_id" tal:attributes="value
                                 app.id" />
                                 <div class="form-group">
-                                    <label for="release-version">Version</label>
+                                    <label class="control-label" for="release-version">
+                                        Version
+                                        <i class="octicon octicon-question"
+                                           data-toggle="popover"
+                                           data-content="major.minor-revision
+                                                        (i.e.  0.1-1)"></i>
+                                    </label>
                                     ${structure:release_form.get_element('version')}
                                 </div>
                                 <div class="form-group">
@@ -122,9 +150,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default"
-                            data-dismiss="modal">Cancel</button>
+                                    data-dismiss="modal">Cancel</button>
                             <button type="button" class="btn btn-primary"
-                                id="edit-release-save" data-dismiss="modal">Create</button>
+                                    id="edit-release-save">Create</button>
                         </div>
                     </div>
                 </div>

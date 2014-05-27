@@ -14,14 +14,44 @@
                 own QA or Production repositories. When done correctly, this allows for
                 push button deployment of code.
             </p>
-            <p>To start, add one of your repositories!</p>
+            <p>To start, add one of your GitHub repositories and create a release!</p>
 
-            <h3>Repositories</h3>
-            <p>Add one of these repositories to your /etc/apt/sources.list file</p>
-            <strong>QA:</strong> deb https://syops.aospace.com/public/repos/qa ./<br>
-            <strong>Prod:</strong> deb https://syops.aospace.com/public/repos/prod ./<br>
+            <h3>SyOps repositories</h3>
+            <p>
+                Add one of the following repositories to your sources list. This will
+                allow you to install your packages via APT.
+            </p>
+
+            <strong>QA:</strong>
+            <pre>
+$ sudo echo "deb https://syops.aospace.com/public/repos/qa ./" &gt; /etc/apt/sources.list.d/syops.list
+$ sudo apt-get update</pre>
+
+            <strong>Production:</strong>
+            <pre>
+$ sudo echo "deb https://syops.aospace.com/public/repos/prod ./" &gt; /etc/apt/sources.list.d/syops.list
+$ sudo apt-get update</pre>
+
+            <h3>Installation</h3>
+            <p>
+                Once you have created a release with SyOps and added a SyOps
+                repository, installation is as simple as:
+            </p>
+            <pre>
+$ sudo apt-get install myapp</pre>
 
             <h3>Automation</h3>
+            <p>
+                Need your servers to auto update? Edit the root users crontab:
+            </p>
+            <pre>
+$ sudo crontab -e</pre>
+            <p>
+                Check for updates every couple of minutes (two in the example):
+            </p>
+            <pre>
+*/2 * * * * apt-get update -o Dir::Etc::sourcelist="sources.list.d/syops.list" -o Dir::Etcsourceparts="-" -o APT::Get::List-Cleanup="0" && apt-get install myapp</pre>
+
         </div>
     </div>
 </metal:main>

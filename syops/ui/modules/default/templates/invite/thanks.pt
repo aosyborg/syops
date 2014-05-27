@@ -1,0 +1,17 @@
+<metal:main use-macro="load: ../layouts/default.pt">
+    <metal:slot fill-slot="head">
+        <link rel="stylesheet" type="text/css" href="/public/css/invite.css" />
+    </metal:slot>
+
+    <div metal:fill-slot="content" class="container">
+        <h1>Thanks!</h1>
+
+        <form method="post" action="/invite/request">
+
+        <p class="lead text-center">
+            Your request has been received!
+        <p>
+
+        </form>
+    </div>
+</metal:main>

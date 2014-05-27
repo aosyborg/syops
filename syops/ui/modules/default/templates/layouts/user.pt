@@ -42,21 +42,10 @@
                 </div>
             </section>
 
-            <section tal:condition="python: user and user.is_admin">
-                <h3>Admin:</h3>
-                <ul>
-                    <li><a href="/admin/teams"
-                           tal:attributes="class python:'active' if sidebar_active ==
-                           'admin-teams' else ''">Manage teams</a></li>
-                    <li><a href="/admin/users"
-                           tal:attributes="class python:'active' if sidebar_active ==
-                           'admin-users' else ''">Manage users</a></li>
-                </ul>
-            </section>
-
             <footer>
                 <ul>
                     <li><a href="#" id="add-org"><i class="octicon octicon-organization"></i></a></li>
+                    <li><a href="/"><i class="octicon octicon-question"></i></a></li>
                     <li><a href="/logout"><i class="octicon octicon-signout"></i></a></li>
                 </ul>
             </footer>

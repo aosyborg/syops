@@ -44,3 +44,8 @@ class App(Abstract):
         release = Release(release_id)
         release.release_status_id += 1
         return release.save()
+
+    def build_console(self):
+        release_id = self.request.params.get('release_id')
+        release = Release(release_id)
+        return release.build_output

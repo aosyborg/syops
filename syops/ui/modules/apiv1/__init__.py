@@ -29,6 +29,11 @@ def add_routes(config):
                     route_name='apiv1:app:release',
                     attr='release',
                     renderer='json')
+    config.add_route('apiv1:app:console', '/v1/app/console')
+    config.add_view(App,
+                    route_name='apiv1:app:console',
+                    attr='build_console',
+                    renderer='string')
 
     # Team
     config.add_route('apiv1:team:edit', '/v1/team/edit')

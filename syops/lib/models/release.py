@@ -86,7 +86,7 @@ class Release(Abstract):
             JOIN release_statuses rs ON r.release_status_id = rs.id
             WHERE r.app_id = %(app_id)s::BIGINT
             AND r.release_status_id > 1
-            ORDER BY update_ts
+            ORDER BY update_ts DESC
             LIMIT 1
         ''', {
             'app_id': app_id

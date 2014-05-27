@@ -42,10 +42,21 @@ Syops.prototype.modules.apps = function (base) {
      */
     methods.create_release = function (form) {
         var app_id = $('.content-wrapper').data('app-id');
+
+        // Ensure version is of correct format
+        if (!/^\d+\.\d+\-\d+$/.test(form.find('#release-version').val())) {
+            form.find('#release-version').closest('.form-group').addClass('has-error');
+            return;
+        }
+
         $.ajax({
             url: '/v1/app/new_release',
             type: 'post',
             data: form.serialize(),
+            beforeSend: function () {
+                form.find('.form-group').removeClass('has-error');
+                $('#edit-release').modal('hide');
+            },
             success: function (response) {
                 window.location = "/apps?id=" + app_id;
             },
@@ -65,7 +76,7 @@ Syops.prototype.modules.apps = function (base) {
             url: '/v1/app/edit',
             type: 'post',
             data: form.serialize(),
-            beforeSave: function () {
+            beforeSend: function () {
                 $('#save-edit-btn').before('<img src="/public/img/ajax-loader.gif" />');
             },
             success: function (response) {
@@ -77,6 +88,31 @@ Syops.prototype.modules.apps = function (base) {
             },
             complete: function () {
             },
+        });
+    };
+
+    /**
+     * Loads build output (console) modal
+     */
+    methods.show_console = function (event) {
+        var modal = $('#build-output'),
+            release_id = $(this).data('release-id');
+        console.log(this, release_id);
+        $.ajax({
+            url: '/v1/app/console',
+            type: 'get',
+            dataType: 'text',
+            data: {release_id: release_id},
+            beforeSend: function () {
+                modal.modal('show');
+            },
+            success: function (response) {
+                console.log('got here!');
+                modal.find('pre').html(response);
+            },
+            complete: function () {
+                console.log('in complete!');
+            }
         });
     };
 
@@ -105,19 +141,43 @@ Syops.prototype.modules.apps = function (base) {
     listeners.releases = function () {
         // New release modal
         $('#new-release-btn').on('click', function (event) {
+            var last_release_row = $('.content-wrapper table tr:nth-child(2)'),
+                last_release_in_prod = /prod/i.test(last_release_row.find('.release-status').text()),
+                last_release_version = last_release_row.find('.release-version').text(),
+                next_version = last_release_version;
             methods.populate_branches();
+
+            // Figure out next version
+            if (last_release_in_prod) {
+                next_version = last_release_version.replace(/(\d+)\.(\d+)\-\d+/,
+                    function (fullMatch, major, minor) {
+                        return major + '.' + (+minor + 1) + '-0';
+                    }
+                );
+            } else {
+                next_version = last_release_version.replace(/(\d+)\.(\d+)\-(\d+)/,
+                    function (fullMatch, major, minor, revision) {
+                        return major + '.' + minor + '-' + (+revision + 1);
+                    }
+                );
+            }
+
+            // Update modal
             $('#edit-release')
                 .find('.modal-title').text('New Release').end()
+                .find('#release-version').val(next_version).end()
                 .modal();
         });
         // Create a release
         $('#edit-release-save').on('click', function(event) {
             methods.create_release($(this).closest('.modal-content').find('form'));
         });
+        // Console
+        $('.release-console i').on('click', methods.show_console);
         // Release to prod
         $('.release-to-prod').on('click', function (event) {
             var row = $(this).closest('tr'),
-                id = row.find('.release-id').text(),
+                id = row.attr('id').replace(/[^\d]/g, ''),
                 version = row.find('.release-version').text();
             base.confirm({
                 title: 'Release to production',

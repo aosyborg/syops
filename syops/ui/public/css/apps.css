@@ -35,3 +35,6 @@ i.octicon-question {
 .popover {
     max-width: 400px;
 }
+.release-console i {
+    cursor: pointer;
+}
