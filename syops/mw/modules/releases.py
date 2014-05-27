@@ -122,7 +122,6 @@ class Releases(Abstract):
                 app.name,
                 release.version), Application.QA_PKG_DIR)
             self.rebuild_packages(Application.QA_PKG_DIR)
-            '''
             Github.post('/repos/%s/%s/releases' % (app.github_owner, app.github_repo),
                 params = {
                     'tag_name': 'v%s' % release.version,
@@ -130,7 +129,6 @@ class Releases(Abstract):
                     'target_commitish': release.tagged_branch,
                     'body': release.description
                 }, access_token = user.access_token)
-            '''
 
         # Clean up
         shutil.rmtree(build_dir)
