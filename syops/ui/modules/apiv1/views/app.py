@@ -37,13 +37,13 @@ class App(Abstract):
             return form.get_errors()
 
         release = Release(data=self.request.params)
-        return release.save()
+        return release.save(self.session['user'].id)
 
     def release(self):
         release_id = self.request.params.get('release_id')
         release = Release(release_id)
         release.release_status_id += 1
-        return release.save()
+        return release.save(self.session['user'].id)
 
     def build_console(self):
         release_id = self.request.params.get('release_id')

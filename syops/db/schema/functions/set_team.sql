@@ -17,6 +17,22 @@ $_$
         v_old public.teams;
         v_id BIGINT;
     BEGIN
+        -- Check if organization already exists
+        IF i_team_id IS NULL AND i_is_organization IS True THEN
+            SELECT * INTO v_old FROM teams WHERE name = i_name AND is_organization = True;
+            IF v_old.id IS NOT NULL THEN
+                INSERT INTO team_users (
+                    team_id,
+                    user_id
+                ) VALUES (
+                    v_old.id,
+                    i_owner_id
+                );
+                return v_old.id;
+            END IF;
+        END IF;
+
+        -- Standard team update/insert
         SELECT * INTO v_old FROM teams WHERE id = i_team_id;
         IF v_old.id IS NULL THEN
             INSERT INTO teams (

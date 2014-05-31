@@ -28,7 +28,7 @@ class Release(Abstract):
         self.update_ts = data.get('update_ts')
         self.insert_ts = data.get('insert_ts')
 
-    def save(self):
+    def save(self, user_id):
         sqs = boto.sqs.connect_to_region(
             'us-east-1',
             aws_access_key_id=Application.AWS_ACCESS_KEY_ID,
@@ -55,7 +55,8 @@ class Release(Abstract):
 
         # Build message payload
         payload = {
-            'release_id': row[0]
+            'release_id': row[0],
+            'user_id': user_id
         }
 
         # Add to queue

@@ -12,7 +12,6 @@ from boto.sqs.message import Message
 from syops.mw.modules import Abstract
 from syops.lib.application import Application
 from syops.lib.models.user import User
-from syops.lib.models.team import Team
 from syops.lib.models.app import App
 from syops.lib.models.release import Release
 from syops.lib.models.github import Github
@@ -63,8 +62,7 @@ class Releases(Abstract):
 
     def build(self, release):
         app = App(release.app_id)
-        team = Team(app.team_id)
-        user = User(team.user_id)
+        user = User(release.user_id)
 
         # Ensure build instructions present
         logging.info('Building %s v%s...' % (app.name, release.version))
