@@ -39,8 +39,9 @@ class Releases(Abstract):
             self.queue.delete_message(message)
             logging.info('Release info recieved: %s' % payload)
 
-            # Grab release id
+            # Grab info from payload
             release_id = payload.get('release_id')
+            user_id = payload.get('user_id')
             if not release_id:
                 logging.warning('No release id found!')
 
@@ -60,9 +61,9 @@ class Releases(Abstract):
             if release.release_status_id == STATUS_PENDING_PROD:
                 self.copy_to_prod(release)
 
-    def build(self, release):
+    def build(self, release, user_id):
         app = App(release.app_id)
-        user = User(release.user_id)
+        user = User(user_id)
 
         # Ensure build instructions present
         logging.info('Building %s v%s...' % (app.name, release.version))
