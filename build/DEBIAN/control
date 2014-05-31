@@ -6,4 +6,4 @@ Architecture: amd64
 Maintainer: Dave Symons <symons@aospace.com>
 Description: SyOps
  Automates build and packaging from GitHub
-Depends: libapache2-mod-wsgi
+Depends: apache2, libapache2-mod-wsgi, python-virtualenv
