@@ -54,7 +54,7 @@ class Releases(Abstract):
 
             # Build package and place in QA
             if release.release_status_id == STATUS_PENDING_QA:
-                self.build(release)
+                self.build(release, user_id)
                 continue;
 
             # Copy package to prod
