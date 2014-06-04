@@ -1,4 +1,4 @@
-#!/home/david/projects/syops/env/bin/python
+#!/opt/syops/env/bin/python
 import signal
 import sys
 

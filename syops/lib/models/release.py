@@ -33,7 +33,7 @@ class Release(Abstract):
             'us-east-1',
             aws_access_key_id=Application.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=Application.AWS_SECRET_ACCESS_KEY)
-        queue = sqs.get_queue(Application.RELEASE_QUEUE)
+        queue = sqs.get_queue(Application.AWS_RELEASE_QUEUE)
         message = Message()
 
         # Add to release table

@@ -97,7 +97,6 @@ Syops.prototype.modules.apps = function (base) {
     methods.show_console = function (event) {
         var modal = $('#build-output'),
             release_id = $(this).data('release-id');
-        console.log(this, release_id);
         $.ajax({
             url: '/v1/app/console',
             type: 'get',
@@ -107,11 +106,9 @@ Syops.prototype.modules.apps = function (base) {
                 modal.modal('show');
             },
             success: function (response) {
-                console.log('got here!');
                 modal.find('pre').html(response);
             },
             complete: function () {
-                console.log('in complete!');
             }
         });
     };
