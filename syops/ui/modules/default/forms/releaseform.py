@@ -9,6 +9,7 @@ class ReleaseForm(FormAbstract):
         version = Input(name='version', type='input')
         version.add_attribute('class', 'form-control')
         version.add_attribute('id', 'release-version')
+        version.add_attribute('placeholder', '0.1-1')
         self.add_element(version)
 
         # Branch (javascript will populate this)
