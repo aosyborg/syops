@@ -35,31 +35,34 @@ class Releases(Abstract):
     def loop(self):
         messages = self.queue.get_messages(1)
         for message in messages:
-            payload = json.loads(message.get_body())
-            self.queue.delete_message(message)
-            logging.info('Release info recieved: %s' % payload)
+            try:
+                payload = json.loads(message.get_body())
+                self.queue.delete_message(message)
+                logging.info('Release info recieved: %s' % payload)
 
-            # Grab info from payload
-            release_id = payload.get('release_id')
-            user_id = payload.get('user_id')
-            if not release_id:
-                logging.warning('No release id found!')
+                # Grab info from payload
+                release_id = payload.get('release_id')
+                user_id = payload.get('user_id')
+                if not release_id:
+                    logging.warning('No release id found!')
 
-            # Ensure there is work to be done
-            release = Release(release_id)
-            if release.release_status_id != STATUS_PENDING_QA and \
-               release.release_status_id != STATUS_PENDING_PROD:
-                logging.warning('Nothing to do')
-                continue
+                # Ensure there is work to be done
+                release = Release(release_id)
+                if release.release_status_id != STATUS_PENDING_QA and \
+                   release.release_status_id != STATUS_PENDING_PROD:
+                    logging.warning('Nothing to do')
+                    continue
 
-            # Build package and place in QA
-            if release.release_status_id == STATUS_PENDING_QA:
-                self.build(release, user_id)
-                continue;
+                # Build package and place in QA
+                if release.release_status_id == STATUS_PENDING_QA:
+                    self.build(release, user_id)
+                    continue;
 
-            # Copy package to prod
-            if release.release_status_id == STATUS_PENDING_PROD:
-                self.copy_to_prod(release)
+                # Copy package to prod
+                if release.release_status_id == STATUS_PENDING_PROD:
+                    self.copy_to_prod(release)
+            except Exception as e:
+                logging.error(str(e))
 
     def build(self, release, user_id):
         app = App(release.app_id)
@@ -133,6 +136,7 @@ class Releases(Abstract):
 
         # Clean up
         shutil.rmtree(build_dir)
+        os.unlink(f.name)
 
         # Save
         release.build_output = 'Stdout:\n %s\n\n Stderr:\n%s' % (output, errors)
