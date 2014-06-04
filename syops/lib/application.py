@@ -11,6 +11,7 @@ class Application(object):
     QA_PKG_DIR = ''
     AWS_ACCESS_KEY_ID = ''
     AWS_SECRET_ACCESS_KEY = ''
+    AWS_RELEASE_QUEUE = ''
     DATA_MANAGER = None
     OAUTH_GITHUB_CLIENT_ID = ''
     OAUTH_GITHUB_CLIENT_SECRET = ''
@@ -45,6 +46,7 @@ class Application(object):
         # AWS
         Application.AWS_ACCESS_KEY_ID = parser.get('aws', 'access_key_id')
         Application.AWS_SECRET_ACCESS_KEY = parser.get('aws', 'secret_access_key')
+        Application.AWS_RELEASE_QUEUE = parser.get('aws', 'release_queue')
 
         # OAuth: GitHub
         Application.OAUTH_GITHUB_CLIENT_ID = parser.get('oauth', 'github.client_id')

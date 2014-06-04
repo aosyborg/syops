@@ -30,7 +30,7 @@ class Releases(Abstract):
             'us-east-1',
             aws_access_key_id=Application.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=Application.AWS_SECRET_ACCESS_KEY)
-        self.queue = self.sqs.get_queue('syops-releases')
+        self.queue = self.sqs.get_queue(Application.AWS_RELEASE_QUEUE)
 
     def loop(self):
         messages = self.queue.get_messages(1)
@@ -121,6 +121,7 @@ class Releases(Abstract):
                 app.name,
                 release.version), Application.QA_PKG_DIR)
             self.rebuild_packages(Application.QA_PKG_DIR)
+            '''
             Github.post('/repos/%s/%s/releases' % (app.github_owner, app.github_repo),
                 params = {
                     'tag_name': 'v%s' % release.version,
@@ -128,6 +129,7 @@ class Releases(Abstract):
                     'target_commitish': release.tagged_branch,
                     'body': release.description
                 }, access_token = user.access_token)
+            '''
 
         # Clean up
         shutil.rmtree(build_dir)

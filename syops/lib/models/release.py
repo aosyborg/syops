@@ -28,12 +28,12 @@ class Release(Abstract):
         self.update_ts = data.get('update_ts')
         self.insert_ts = data.get('insert_ts')
 
-    def save(self, user_id):
+    def save(self, user_id=None):
         sqs = boto.sqs.connect_to_region(
             'us-east-1',
             aws_access_key_id=Application.AWS_ACCESS_KEY_ID,
             aws_secret_access_key=Application.AWS_SECRET_ACCESS_KEY)
-        queue = sqs.get_queue('syops-releases')
+        queue = sqs.get_queue(Application.RELEASE_QUEUE)
         message = Message()
 
         # Add to release table
@@ -53,15 +53,17 @@ class Release(Abstract):
         })
         row = db_cursor.fetchone()
 
-        # Build message payload
-        payload = {
-            'release_id': row[0],
-            'user_id': user_id
-        }
+        # If user_id was passed, add to message queue
+        if user_id:
+            # Build message payload
+            payload = {
+                'release_id': row[0],
+                'user_id': user_id
+            }
 
-        # Add to queue
-        message.set_body(json.dumps(payload))
-        queue.write(message)
+            # Add to queue
+            message.set_body(json.dumps(payload))
+            queue.write(message)
         return message.id
 
     @staticmethod
